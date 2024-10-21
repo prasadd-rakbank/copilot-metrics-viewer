@@ -1,0 +1,50 @@
+name: copilot build dashboard
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+
+jobs:
+  copilot-build-dashboard:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 14
+
+      - name: Install Dependencies
+        run: |
+          npm install
+          npm run build
+        env:
+          VUE_APP_GITHUB_TOKEN: ${{ secrets.VUE_APP_GITHUB_TOKEN }}
+
+      - name: Checkout second repository
+        uses: actions/checkout@v4
+        with:
+          repository: rakbank-internal/copilot-dashboard
+          token: ${{ secrets.TOKEN_GITHUB }}
+          path: copilot-viewer
+          ref: gh-pages  
+
+      - name: Copy dist folder
+        run: cp -r dist/* copilot-viewer/ 
+
+      - name: Commit and push
+        run: |
+          cd copilot-viewer
+          git config --local user.email "test-action@github.com"
+          git config --local user.name "test-action"
+          git add .
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "update dist folder"
+          else
+            git commit --allow-empty -m "trigger copilet report build"
+          fi
+          git push origin gh-pages 
