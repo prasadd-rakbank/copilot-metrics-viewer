@@ -8,12 +8,26 @@
         <v-icon>mdi-github</v-icon>
       </v-btn>
 
-      <v-toolbar-title
-        >RAKBANK GitHub Copilot Metrics
-        <small class="text-grey"
-          >{{ startDate }} to {{ endDate }}</small
-        ></v-toolbar-title
-      >
+      <v-toolbar-title>
+        RAKBANK GitHub Copilot Metrics
+        <small class="text-grey">{{ startDate }} to {{ endDate }}</small>
+      </v-toolbar-title>
+      <v-select
+        class="my-auto"
+        clearable
+        chips
+        label="Choose A Team (Leave Blank for All)"
+        item-title="name"
+        item-value="name"
+        :items="teams"
+        v-model="selectedTeam"
+        v-on:update:model-value="changeTeam"
+        ><template v-slot:item="{ props, item }">
+          <v-list-item
+            v-bind="props"
+            :subtitle="(item.raw.copilotSeats || 0) + ' licenses'"
+          ></v-list-item> </template
+      ></v-select>
     </v-toolbar>
 
     <!-- API Error Message -->
@@ -48,9 +62,12 @@
               <MetricsViewer
                 v-if="item === itemName"
                 :metrics="metrics"
+                :teamMetrics="teamMetrics"
                 :totalSeats="totalSeats"
                 :activeSeats="activeSeats"
                 :inactiveSeats="inactiveSeats"
+                :selectedTeam="selectedTeam"
+                :teams="teams"
               />
               <LanguagesBreakdown
                 v-if="item === 'languages'"
@@ -134,7 +151,13 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { getMetricsApi, getSeatsInformation } from '../api/GitHubApi';
+import {
+  getMetricsApi,
+  getSeatsByTeam,
+  getSeatsInformation,
+  getTeams,
+  getTeamsMetrics,
+} from '../api/GitHubApi';
 import { Metrics } from '../model/Metrics';
 
 //Components
@@ -142,6 +165,7 @@ import MetricsViewer from './MetricsViewer.vue';
 import LanguagesBreakdown from './LanguagesBreakdown.vue';
 import CopilotChatViewer from './CopilotChatViewer.vue';
 import ApiResponse from './ApiResponse.vue';
+import { Team } from '@/model/Team';
 
 export default defineComponent({
   name: 'MainComponent',
@@ -156,6 +180,10 @@ export default defineComponent({
       localStorage.setItem('token', this.tokenValue);
       this.noToken = false;
       location.reload();
+    },
+
+    changeTeam(team: string) {
+      console.log(team, this.selectedTeam);
     },
   },
   computed: {
@@ -181,6 +209,7 @@ export default defineComponent({
     return {
       tabItems: ['languages', 'copilot chat', 'api response'],
       tab: null,
+      selectedTeam: '',
       noToken: true,
       tokenValue: '',
     };
@@ -196,6 +225,8 @@ export default defineComponent({
   setup() {
     const metricsReady = ref(false);
     const metrics = ref<Metrics[]>([]);
+    const teamMetrics = ref<Metrics[]>([]);
+    const teams = ref<Team[]>([]);
     let startDate = ref<string | undefined>(undefined);
     let endDate = ref<string | undefined>(undefined);
     let totalSeats = ref(0);
@@ -256,6 +287,17 @@ export default defineComponent({
       inactiveSeats.value = data.seat_breakdown.inactive_this_cycle;
     });
 
+    getTeamsMetrics(token).then((data) => {
+      teamMetrics.value = data;
+    });
+
+    getTeams(token).then((data) => {
+      console.log('Teams are: ', data);
+      getSeatsByTeam(token, data).then((data) => {
+        teams.value = data;
+      });
+    });
+
     return {
       metricsReady,
       metrics,
@@ -265,6 +307,8 @@ export default defineComponent({
       totalSeats,
       activeSeats,
       inactiveSeats,
+      teams,
+      teamMetrics,
     };
   },
 });

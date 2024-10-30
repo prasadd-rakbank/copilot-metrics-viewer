@@ -2,6 +2,7 @@
   "name": "copilot-metrics-viewer",
   "version": "1.4.0",
   "private": true,
+  "homepage": "https://prasadd-rakbank.github.io/copilot-metrics-viewer/",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

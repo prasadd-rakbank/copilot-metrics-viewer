@@ -12,8 +12,22 @@
       >
         <v-card-item>
           <div class="my-2">
-            <div class="text-black font-weight-bold">
+            <div
+              class="text-black font-weight-bold"
+              v-if="selectedTeam === null || selectedTeam === ''"
+            >
               {{ activeSeats }} active out of {{ totalSeats }} licenses
+            </div>
+            <div
+              class="text-black font-weight-bold"
+              v-if="!(selectedTeam === null || selectedTeam === '')"
+            >
+              {{ totalActiveUsers }}
+              active out of
+              {{
+                teams.find((t: Team) => t.name === selectedTeam)?.copilotSeats
+              }}
+              licenses
             </div>
             <v-progress-linear
               :location="null"
@@ -27,6 +41,19 @@
               min="0"
               :model-value="totalActiveUsers"
               rounded
+              v-if="selectedTeam === null || selectedTeam === ''"
+            >
+            </v-progress-linear>
+            <v-progress-linear
+              :location="null"
+              bg-color="grey-darken-3"
+              color="cyan-darken-4"
+              height="16"
+              :max="teams.find((t: Team) => t.name === selectedTeam)?.copilotSeats"
+              min="0"
+              :model-value="totalActiveUsers"
+              rounded
+              v-if="!(selectedTeam === null || selectedTeam === '')"
             >
             </v-progress-linear>
             <div class="text-h3 font-weight-bold text-cyan-darken-4 mt-2">
@@ -46,6 +73,7 @@
         variant="elevated"
         class="mx-3 my-3"
         style="width: 250px; height: 180px"
+        v-if="selectedTeam === null || selectedTeam === ''"
       >
         <v-card-item>
           <div class="my-5">
@@ -172,7 +200,7 @@
                 >AED</small
               >
               {{
-                (copilotLicenseCost * totalSeats).toLocaleString('en-US', {
+                licenseCost.toLocaleString('en-US', {
                   style: 'decimal',
                   minimumFractionDigits: 0,
                   maximumFractionDigits: 0,
@@ -201,11 +229,9 @@
           <div class="my-5">
             <div class="text-h3 font-weight-bold text-green-darken-4">
               {{
-                (
-                  ((costAvoidance - copilotLicenseCost * totalSeats) /
-                    (copilotLicenseCost * totalSeats)) *
-                  100
-                ).toFixed(0)
+                ~~(((costAvoidance - licenseCost) / licenseCost) * 100).toFixed(
+                  0,
+                )
               }}%
             </div>
             <div
@@ -223,6 +249,7 @@
         variant="elevated"
         class="mx-3 my-3"
         style="width: 260px; height: 175px"
+        v-if="selectedTeam === null || selectedTeam === ''"
       >
         <v-card-item>
           <div class="my-5">
@@ -270,7 +297,7 @@
             <div class="my-5">
               <div class="text-h3 font-weight-bold text-red-darken-4">
                 {{
-                  (
+                  ~~(
                     (totalGeneratedCode / cumulativeNumberLOCAccepted) *
                     100
                   ).toFixed(0)
@@ -320,7 +347,7 @@
             <div class="my-5">
               <div class="text-h3 font-weight-bold text-green-darken-4">
                 {{
-                  (
+                  ~~(
                     (totalGenetedTests / cumulativeNumberLOCAccepted) *
                     100
                   ).toFixed(0)
@@ -369,7 +396,7 @@
             <div class="my-5">
               <div class="text-h3 font-weight-bold text-purple-darken-4">
                 {{
-                  (
+                  ~~(
                     (totalGeneratedConfigurations /
                       cumulativeNumberLOCAccepted) *
                     100
@@ -416,7 +443,7 @@
           <div class="my-5">
             <div class="text-h3 font-weight-bold text-purple-darken-4">
               {{
-                (
+                ~~(
                   (totalOtherGeneratedCode / cumulativeNumberLOCAccepted) *
                   100
                 ).toFixed(0)
@@ -434,45 +461,11 @@
         </v-card-item>
       </v-card>
     </div>
-
-    <!-- <v-main
-      class="p-1"
-      style="min-height: 300px"
-    >
-      <v-container
-        style="min-height: 300px"
-        class="px-4 elevation-2"
-      >
-        <h2>Acceptance rate (%)</h2>
-        <Bar
-          :data="acceptanceRateChartData"
-          :options="chartOptions"
-        />
-
-        <h2>Total Suggestions Count | Total Acceptances Count</h2>
-        <Line
-          :data="totalSuggestionsAndAcceptanceChartData"
-          :options="chartOptions"
-        />
-
-        <h2>Total Lines Suggested | Total Lines Accepted</h2>
-        <Line
-          :data="chartData"
-          :options="chartOptions"
-        />
-
-        <h2>Total Active Users</h2>
-        <Bar
-          :data="totalActiveUsersChartData"
-          :options="totalActiveUsersChartOptions"
-        />
-      </v-container>
-    </v-main> -->
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRef } from 'vue';
+import { defineComponent, ref, toRef, watch } from 'vue';
 import { Metrics } from '../model/Metrics';
 import { Language } from '../model/Language';
 import {
@@ -487,6 +480,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { Team } from '@/model/Team';
 
 ChartJS.register(
   ArcElement,
@@ -507,6 +501,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    teamMetrics: {
+      type: Object,
+      required: true,
+    },
     totalSeats: {
       type: Number,
       required: true,
@@ -517,6 +515,14 @@ export default defineComponent({
     },
     inactiveSeats: {
       type: Number,
+      required: true,
+    },
+    selectedTeam: {
+      type: String,
+      required: true,
+    },
+    teams: {
+      type: Array<Team>,
       required: true,
     },
   },
@@ -587,7 +593,6 @@ export default defineComponent({
 
     //Tiles
     let acceptanceRateAverage = ref(0);
-    let cumulativeNumberSuggestions = ref(0);
     let cumulativeNumberAcceptances = ref(0);
     let cumulativeNumberLOCAccepted = ref(0);
     let totalActiveUsers = ref(0);
@@ -604,12 +609,6 @@ export default defineComponent({
       labels: [],
       datasets: [],
     });
-
-    //Total Suggestions Count | Total Acceptance Counts
-    const totalSuggestionsAndAcceptanceChartData = ref<{
-      labels: string[];
-      datasets: any[];
-    }>({ labels: [], datasets: [] });
 
     //Total Lines Suggested | Total Lines Accepted
     const chartData = ref<{ labels: string[]; datasets: any[] }>({
@@ -662,222 +661,218 @@ export default defineComponent({
       },
     };
 
-    const data = toRef(props, 'metrics').value;
+    const refreshData = () => {
+      const teamName = toRef(props, 'selectedTeam').value;
+      console.log('Refreshing for team: ', teamName);
+      const data =
+        teamName === null || teamName === ''
+          ? toRef(props, 'metrics').value
+          : toRef(props, 'teamMetrics').value.filter(
+              (m: Metrics) => m.team === teamName,
+            );
 
-    cumulativeNumberSuggestions.value = 0;
-    const cumulativeSuggestionsData = data.map((m: Metrics) => {
-      cumulativeNumberSuggestions.value += m.total_suggestions_count;
-      return m.total_suggestions_count;
-    });
+      console.log('data is: ', data, toRef(props, 'teamMetrics').value);
 
-    cumulativeNumberAcceptances.value = 0;
-    const cumulativeAcceptancesData = data.map((m: Metrics) => {
-      cumulativeNumberAcceptances.value += m.total_acceptances_count;
-      return m.total_acceptances_count;
-    });
+      cumulativeNumberAcceptances.value = 0;
+      const cumulativeAcceptancesData = data.map((m: Metrics) => {
+        cumulativeNumberAcceptances.value += m.total_acceptances_count;
+        return m.total_acceptances_count;
+      });
 
-    totalSuggestionsAndAcceptanceChartData.value = {
-      labels: data.map((m: Metrics) => m.day),
-      datasets: [
-        {
-          label: 'Total Suggestions',
-          data: cumulativeSuggestionsData,
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-        },
-        {
-          label: 'Total Acceptance',
-          data: cumulativeAcceptancesData,
-          backgroundColor: 'rgba(153, 102, 255, 0.2)',
-          borderColor: 'rgba(153, 102, 255, 1)',
-        },
-      ],
-    };
+      cumulativeNumberLOCAccepted.value = 0;
+      const cumulativeLOCAcceptedData = data.map((m: Metrics) => {
+        const total_lines_accepted = m.total_lines_accepted;
+        cumulativeNumberLOCAccepted.value += total_lines_accepted;
+        return total_lines_accepted;
+      });
 
-    cumulativeNumberLOCAccepted.value = 0;
-    const cumulativeLOCAcceptedData = data.map((m: Metrics) => {
-      const total_lines_accepted = m.total_lines_accepted;
-      cumulativeNumberLOCAccepted.value += total_lines_accepted;
-      return total_lines_accepted;
-    });
+      totalActiveUsers.value = 0;
+      const totalActiveUsersData = data.map((m: Metrics) => {
+        totalActiveUsers.value = Math.max(
+          m.total_active_users,
+          totalActiveUsers.value,
+        );
+        return m.total_active_users;
+      });
 
-    totalActiveUsers.value = 0;
-    const totalActiveUsersData = data.map((m: Metrics) => {
-      totalActiveUsers.value = Math.max(
-        m.total_active_users,
-        totalActiveUsers.value,
-      );
-      return m.total_active_users;
-    });
+      licenseCost.value =
+        copilotLicenseCost *
+        (teamName == null || teamName === ''
+          ? props.totalSeats
+          : totalActiveUsers.value);
 
-    licenseCost.value = copilotLicenseCost * props.totalSeats;
+      chartData.value = {
+        labels: data.map((m: Metrics) => m.day),
+        datasets: [
+          {
+            label: 'Total Lines Suggested',
+            data: data.map((m: Metrics) => m.total_lines_suggested),
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+          },
+          {
+            label: 'Total Lines Accepted',
+            data: cumulativeLOCAcceptedData,
+            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+            borderColor: 'rgba(153, 102, 255, 1)',
+          },
+        ],
+      };
 
-    chartData.value = {
-      labels: data.map((m: Metrics) => m.day),
-      datasets: [
-        {
-          label: 'Total Lines Suggested',
-          data: data.map((m: Metrics) => m.total_lines_suggested),
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-        },
-        {
-          label: 'Total Lines Accepted',
-          data: cumulativeLOCAcceptedData,
-          backgroundColor: 'rgba(153, 102, 255, 0.2)',
-          borderColor: 'rgba(153, 102, 255, 1)',
-        },
-      ],
-    };
-
-    let sum = 0;
-    const acceptanceRates = data.map((m: Metrics) => {
-      const rate =
-        m.total_lines_suggested !== 0
-          ? (m.total_lines_accepted / m.total_lines_suggested) * 100
-          : 0;
-      sum += rate;
-      return rate;
-    });
-    acceptanceRateAverage.value = sum / data.length;
-
-    acceptanceRateChartData.value = {
-      labels: data.map((m: Metrics) => m.day),
-      datasets: [
-        {
-          type: 'line', // This makes the dataset a line in the chart
-          label: 'Acceptance Rate',
-          data: acceptanceRates,
-          backgroundColor: 'rgba(173, 216, 230, 0.2)', // light blue
-          borderColor: 'rgba(173, 216, 230, 1)', // darker blue
-          fill: false, // This makes the area under the line not filled
-        },
-      ],
-    };
-
-    totalActiveUsersChartData.value = {
-      labels: data.map((m: Metrics) => m.day),
-      datasets: [
-        {
-          label: 'Total Active Users',
-          data: data.map((m: Metrics) => m.total_active_users),
-          backgroundColor: 'rgba(0, 0, 139, 0.2)', // dark blue with 20% opacity
-          borderColor: 'rgba(255, 99, 132, 1)',
-        },
-      ],
-    };
-
-    // Process the language breakdown separately
-    data.forEach((m: Metrics) =>
-      m.breakdown.forEach((breakdown) => {
-        const languageName = breakdown.language;
-        let language = languages.get(languageName);
-
-        if (!language) {
-          // Create a new Language object if it does not exist
-          language = new Language({
-            name: languageName,
-            acceptedPrompts: breakdown.acceptances_count,
-            suggestedLinesOfCode: breakdown.lines_suggested,
-            acceptedLinesOfCode: breakdown.lines_accepted,
-          });
-          languages.set(languageName, language);
-        } else {
-          // Update the existing Language object
-          language.acceptedPrompts += breakdown.acceptances_count;
-          language.suggestedLinesOfCode += breakdown.lines_suggested;
-          language.acceptedLinesOfCode += breakdown.lines_accepted;
-        }
-        // Recalculate the acceptance rate
-        language.acceptanceRate =
-          language.suggestedLinesOfCode !== 0
-            ? (language.acceptedLinesOfCode / language.suggestedLinesOfCode) *
-              100
+      let sum = 0;
+      const acceptanceRates = data.map((m: Metrics) => {
+        const rate =
+          m.total_lines_suggested !== 0
+            ? (m.total_lines_accepted / m.total_lines_suggested) * 100
             : 0;
-      }),
+        sum += rate;
+        return rate;
+      });
+      acceptanceRateAverage.value = sum / data.length;
+
+      acceptanceRateChartData.value = {
+        labels: data.map((m: Metrics) => m.day),
+        datasets: [
+          {
+            type: 'line', // This makes the dataset a line in the chart
+            label: 'Acceptance Rate',
+            data: acceptanceRates,
+            backgroundColor: 'rgba(173, 216, 230, 0.2)', // light blue
+            borderColor: 'rgba(173, 216, 230, 1)', // darker blue
+            fill: false, // This makes the area under the line not filled
+          },
+        ],
+      };
+
+      totalActiveUsersChartData.value = {
+        labels: data.map((m: Metrics) => m.day),
+        datasets: [
+          {
+            label: 'Total Active Users',
+            data: data.map((m: Metrics) => m.total_active_users),
+            backgroundColor: 'rgba(0, 0, 139, 0.2)', // dark blue with 20% opacity
+            borderColor: 'rgba(255, 99, 132, 1)',
+          },
+        ],
+      };
+
+      // Process the language breakdown separately
+      data.forEach((m: Metrics) =>
+        m.breakdown.forEach((breakdown) => {
+          const languageName = breakdown.language;
+          let language = languages.get(languageName);
+
+          if (!language) {
+            // Create a new Language object if it does not exist
+            language = new Language({
+              name: languageName,
+              acceptedPrompts: breakdown.acceptances_count,
+              suggestedLinesOfCode: breakdown.lines_suggested,
+              acceptedLinesOfCode: breakdown.lines_accepted,
+            });
+            languages.set(languageName, language);
+          } else {
+            // Update the existing Language object
+            language.acceptedPrompts += breakdown.acceptances_count;
+            language.suggestedLinesOfCode += breakdown.lines_suggested;
+            language.acceptedLinesOfCode += breakdown.lines_accepted;
+          }
+          // Recalculate the acceptance rate
+          language.acceptanceRate =
+            language.suggestedLinesOfCode !== 0
+              ? (language.acceptedLinesOfCode / language.suggestedLinesOfCode) *
+                100
+              : 0;
+        }),
+      );
+
+      costAvoidance.value =
+        ((cumulativeNumberLOCAccepted.value * timePerLineInMinutes) /
+          (60 * 8)) *
+        developerRatePerDay;
+
+      returnOnInvestment.value =
+        ((costAvoidance.value - licenseCost.value) / licenseCost.value) * 100;
+
+      totalGeneratedCode.value = data
+        .map((m: Metrics) => {
+          let total = 0;
+          m.breakdown.forEach((breakdown) => {
+            if (developmentLanguages.includes(breakdown.language)) {
+              total +=
+                breakdown.language === 'java'
+                  ? breakdown.lines_accepted / 2
+                  : breakdown.lines_accepted;
+            }
+          });
+          return total;
+        })
+        .reduce((a: number, b: number) => a + b, 0);
+
+      totalGenetedTests.value = data
+        .map((m: Metrics) => {
+          let total = 0;
+          m.breakdown.forEach((breakdown) => {
+            if (unitTestLanguages.includes(breakdown.language)) {
+              total +=
+                breakdown.language === 'java'
+                  ? breakdown.lines_accepted / 2
+                  : breakdown.lines_accepted;
+            }
+          });
+          return total;
+        })
+        .reduce((a: number, b: number) => a + b, 0);
+
+      totalGeneratedConfigurations.value = data
+        .map((m: Metrics) => {
+          let total = 0;
+          m.breakdown.forEach((breakdown) => {
+            if (configurationLanguages.includes(breakdown.language)) {
+              total += breakdown.lines_accepted;
+            }
+          });
+          return total;
+        })
+        .reduce((a: number, b: number) => a + b, 0);
+
+      totalOtherGeneratedCode.value = data
+        .map((m: Metrics) => {
+          let total = 0;
+          m.breakdown.forEach((breakdown) => {
+            if (
+              !developmentLanguages.includes(breakdown.language) &&
+              !unitTestLanguages.includes(breakdown.language) &&
+              !configurationLanguages.includes(breakdown.language)
+            ) {
+              total += breakdown.lines_accepted;
+            }
+          });
+          return total;
+        })
+        .reduce((a: number, b: number) => a + b, 0);
+    };
+
+    // Initial call to setup data
+    refreshData();
+
+    // Watch for changes in selectedTeam prop
+    watch(
+      () => props.selectedTeam,
+      (newVal, oldVal) => {
+        if (newVal !== oldVal) {
+          refreshData();
+        }
+      },
     );
 
-    //Sort languages map by accepted lines of code
-    languages[Symbol.iterator] = function* () {
-      yield* [...this.entries()].sort(
-        (a, b) => b[1].acceptedLinesOfCode - a[1].acceptedLinesOfCode,
-      );
-    };
-
-    costAvoidance.value =
-      ((cumulativeNumberLOCAccepted.value * timePerLineInMinutes) / (60 * 8)) *
-      developerRatePerDay;
-
-    returnOnInvestment.value =
-      ((costAvoidance.value - licenseCost.value) / licenseCost.value) * 100;
-
-    totalGeneratedCode.value = data
-      .map((m: Metrics) => {
-        let total = 0;
-        m.breakdown.forEach((breakdown) => {
-          if (developmentLanguages.includes(breakdown.language)) {
-            total +=
-              breakdown.language === 'java'
-                ? breakdown.lines_accepted / 2
-                : breakdown.lines_accepted;
-          }
-        });
-        return total;
-      })
-      .reduce((a: number, b: number) => a + b, 0);
-
-    totalGenetedTests.value = data
-      .map((m: Metrics) => {
-        let total = 0;
-        m.breakdown.forEach((breakdown) => {
-          if (unitTestLanguages.includes(breakdown.language)) {
-            total +=
-              breakdown.language === 'java'
-                ? breakdown.lines_accepted / 2
-                : breakdown.lines_accepted;
-          }
-        });
-        return total;
-      })
-      .reduce((a: number, b: number) => a + b, 0);
-
-    totalGeneratedConfigurations.value = data
-      .map((m: Metrics) => {
-        let total = 0;
-        m.breakdown.forEach((breakdown) => {
-          if (configurationLanguages.includes(breakdown.language)) {
-            total += breakdown.lines_accepted;
-          }
-        });
-        return total;
-      })
-      .reduce((a: number, b: number) => a + b, 0);
-
-    totalOtherGeneratedCode.value = data
-      .map((m: Metrics) => {
-        let total = 0;
-        m.breakdown.forEach((breakdown) => {
-          if (
-            !developmentLanguages.includes(breakdown.language) &&
-            !unitTestLanguages.includes(breakdown.language) &&
-            !configurationLanguages.includes(breakdown.language)
-          ) {
-            total += breakdown.lines_accepted;
-          }
-        });
-        return total;
-      })
-      .reduce((a: number, b: number) => a + b, 0);
-
     return {
-      totalSuggestionsAndAcceptanceChartData,
       chartData,
       chartOptions,
       totalActiveUsersChartData,
       totalActiveUsersChartOptions,
       acceptanceRateChartData,
       acceptanceRateAverage,
-      cumulativeNumberSuggestions,
       cumulativeNumberAcceptances,
       cumulativeNumberLOCAccepted,
       languages,

@@ -9,6 +9,7 @@ import axios from 'axios';
 import { Metrics } from '../model/Metrics';
 import organizationMockedResponse from '../assets/organization_response_sample.json';
 import enterpriseMockedResponse from '../assets/enterprise_response_sample.json';
+import { Team, TeamMember, TeamSeats } from '@/model/Team';
 
 export const getMetricsApi = async (token: string): Promise<Metrics[]> => {
   let response;
@@ -60,7 +61,7 @@ export const getMetricsApi = async (token: string): Promise<Metrics[]> => {
   return metricsData;
 };
 
-export const getTeams = async (token: string): Promise<string[]> => {
+export const getTeams = async (token: string): Promise<Team[]> => {
   const response = await axios.get(
     `https://api.github.com/orgs/${process.env.VUE_APP_GITHUB_ORG}/teams`,
     {
@@ -72,7 +73,53 @@ export const getTeams = async (token: string): Promise<string[]> => {
     },
   );
 
-  return response.data;
+  const teams = await Promise.all(
+    response.data.map(async (team: Team) => {
+      const response = await axios.get(
+        `https://api.github.com/orgs/${process.env.VUE_APP_GITHUB_ORG}/teams/${team.slug}/members`,
+        {
+          headers: {
+            Accept: 'application/vnd.github+json',
+            Authorization: `Bearer ${token}`,
+            'X-GitHub-Api-Version': '2022-11-28',
+          },
+        },
+      );
+
+      team.members = response.data.map((item: any) => new TeamMember(item));
+      return team;
+    }),
+  );
+
+  return teams.flat();
+};
+
+export const getTeamsMetrics = async (token: string): Promise<Metrics[]> => {
+  const teams = await getTeams(token);
+  console.log(teams);
+
+  const teamsMetrics = await Promise.all(
+    teams.map(async (team: Team) => {
+      const response = await axios.get(
+        `https://api.github.com/orgs/${process.env.VUE_APP_GITHUB_ORG}/team/${team.slug}/copilot/usage`,
+        {
+          headers: {
+            Accept: 'application/vnd.github+json',
+            Authorization: `Bearer ${token}`,
+            'X-GitHub-Api-Version': '2022-11-28',
+          },
+        },
+      );
+
+      return response.data.map((item: any) => {
+        const metric = new Metrics(item);
+        metric.team = team.name;
+        return metric;
+      });
+    }),
+  );
+
+  return teamsMetrics.flat();
 };
 
 export const getSeatsInformation = async (
@@ -92,4 +139,32 @@ export const getSeatsInformation = async (
   console.log(response);
 
   return response.data;
+};
+
+export const getSeatsByTeam = async (
+  token: string,
+  teams: Team[],
+): Promise<Team[]> => {
+  const response = await axios.get(
+    `https://api.github.com/orgs/${process.env.VUE_APP_GITHUB_ORG}/copilot/billing/seats`,
+    {
+      headers: {
+        Accept: 'application/vnd.github+json',
+        Authorization: `Bearer ${token}`,
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    },
+  );
+
+  response.data.seats.map((item: any) => {
+    const user: TeamMember = item.assignee;
+    //loop through each team in the teams array and find this user. If found, increment the seat count for the team by 1
+    teams.forEach((team) => {
+      if (team.members.find((member) => member.id === user.id)) {
+        console.log(team.name, team.copilotSeats);
+        team.copilotSeats = ~~team.copilotSeats + 1;
+      }
+    });
+  });
+  return teams;
 };
