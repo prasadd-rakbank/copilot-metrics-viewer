@@ -674,7 +674,7 @@ export default defineComponent({
       console.log('data is: ', data, toRef(props, 'teamMetrics').value);
 
       cumulativeNumberAcceptances.value = 0;
-      const cumulativeAcceptancesData = data.map((m: Metrics) => {
+      data.map((m: Metrics) => {
         cumulativeNumberAcceptances.value += m.total_acceptances_count;
         return m.total_acceptances_count;
       });
@@ -687,7 +687,7 @@ export default defineComponent({
       });
 
       totalActiveUsers.value = 0;
-      const totalActiveUsersData = data.map((m: Metrics) => {
+      data.map((m: Metrics) => {
         totalActiveUsers.value = Math.max(
           m.total_active_users,
           totalActiveUsers.value,

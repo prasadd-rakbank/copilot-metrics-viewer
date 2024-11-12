@@ -6,7 +6,6 @@
 
 import axios from 'axios';
 import { Metrics } from '../model/Metrics';
-import organizationMockedResponse from '../assets/organization_response_sample.json';
 import enterpriseMockedResponse from '../assets/enterprise_response_sample.json';
 
 import { Team, TeamMember } from '@/model/Team';
@@ -31,7 +30,12 @@ const fetchFileList = async (): Promise<string[]> => {
 };
 
 const fetchFileContent = async (filePath: string): Promise<Metrics[]> => {
-  const response = await axios.get(
+  const response = localStorage.getItem(filePath);
+  //return cached response if available
+  if (response) {
+    return JSON.parse(response);
+  }
+  const apiResponse = await axios.get(
     `${GITHUB_API_URL}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}`,
     {
       headers: {
@@ -40,7 +44,9 @@ const fetchFileContent = async (filePath: string): Promise<Metrics[]> => {
       },
     },
   );
-  return response.data;
+  //cache the response
+  localStorage.setItem(filePath, JSON.stringify(apiResponse.data));
+  return apiResponse.data;
 };
 
 const combineMetrics = async (): Promise<Metrics[]> => {
