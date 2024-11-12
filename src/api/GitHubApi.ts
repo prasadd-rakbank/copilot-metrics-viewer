@@ -12,7 +12,7 @@ import enterpriseMockedResponse from '../assets/enterprise_response_sample.json'
 import { Team, TeamMember } from '@/model/Team';
 
 const GITHUB_API_URL = 'https://api.github.com';
-const REPO_OWNER = 'rakbank-internal';
+const REPO_OWNER = 'prasadd-rakbank';
 const REPO_NAME = 'copilot-metrics-viewer';
 const DATA_DIR = 'data';
 const GITHUB_TOKEN = localStorage.getItem('token');
@@ -190,8 +190,6 @@ export const getSeatsInformation = async (
       },
     },
   );
-
-  // console.log(response);
 
   return response.data;
 };
