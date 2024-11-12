@@ -22,7 +22,7 @@ jobs:
 
       - name: Fetch GitHub Copilot metrics
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.METRICS_GITHUB_TOKEN }}
         run: node fetch-copilot-metrics.js
 
       - name: Commit and push metrics file
