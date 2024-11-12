@@ -4,12 +4,59 @@
 //Also add X-GitHub-Api-Version: 2022-11-28 header
 //Return the response from the API
 
-import axios from 'axios';
 
+import axios from 'axios';
 import { Metrics } from '../model/Metrics';
 import organizationMockedResponse from '../assets/organization_response_sample.json';
 import enterpriseMockedResponse from '../assets/enterprise_response_sample.json';
-import { Team, TeamMember, TeamSeats } from '@/model/Team';
+
+import { Team, TeamMember } from '@/model/Team';
+
+const GITHUB_API_URL = 'https://api.github.com';
+const REPO_OWNER = 'rakbank-internal';
+const REPO_NAME = 'copilot-metrics-viewer';
+const DATA_DIR = 'data';
+const GITHUB_TOKEN = localStorage.getItem('token');
+
+const fetchFileList = async (): Promise<string[]> => {
+  const response = await axios.get(
+    `${GITHUB_API_URL}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DATA_DIR}`,
+    {
+      headers: {
+        Authorization: `Bearer ${GITHUB_TOKEN}`,
+        accept: 'application/vnd.github+json'
+      },
+    }
+  );
+  return response.data.map((file: any) => file.path);
+};
+
+const fetchFileContent = async (filePath: string): Promise<Metrics[]> => {
+  const response = await axios.get(
+    `${GITHUB_API_URL}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}`,
+    {
+      headers: {
+        Authorization: `Bearer ${GITHUB_TOKEN}`,
+        Accept: 'application/vnd.github.v3.raw',
+      },
+    }
+  );
+  return response.data;
+};
+
+const combineMetrics = async (): Promise<Metrics[]> => {
+  const fileList = await fetchFileList();
+  const allMetrics: Metrics[] = [];
+
+  for (const filePath of fileList) {
+    console.log("Fetching data from file:", filePath);
+    const fileMetrics = await fetchFileContent(filePath);
+    allMetrics.push(...fileMetrics);
+  }
+
+  return allMetrics;
+};
+
 
 export const getMetricsApi = async (token: string): Promise<Metrics[]> => {
   let response;
@@ -17,6 +64,13 @@ export const getMetricsApi = async (token: string): Promise<Metrics[]> => {
 
   if (process.env.VUE_APP_MOCKED_DATA === 'true') {
     if (process.env.VUE_APP_SCOPE === 'organization') {
+      combineMetrics().then((combinedMetrics) => {
+        response = combinedMetrics;
+        metricsData = response.map((item: any) => new Metrics(item));
+        console.log(JSON.stringify(combinedMetrics, null, 2));
+      }).catch((error) => {
+        console.error('Error combining metrics:', error);
+      });
       response = organizationMockedResponse;
     } else if (process.env.VUE_APP_SCOPE === 'enterprise') {
       response = enterpriseMockedResponse;

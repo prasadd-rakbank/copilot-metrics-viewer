@@ -1,11 +1,11 @@
 const axios = require('axios');
 const fs = require('fs');
 
-async function fetchCopilotMetrics() {
+async function fetchCopilotMetrics(daysToSubtract = 1) {
   const date = new Date();
-  date.setDate(date.getDate() - 1);
+  date.setDate(date.getDate() - daysToSubtract);
   const formattedDate = date.toISOString().split('T')[0];
-  const fileName = `copilot-data-${formattedDate}.json`;
+  const fileName = `./data/copilot-data-${formattedDate}.json`;
 
   try {
     const response = await axios.get(
@@ -30,4 +30,5 @@ async function fetchCopilotMetrics() {
   }
 }
 
-fetchCopilotMetrics();
+const daysToSubtract = process.argv[2] ? parseInt(process.argv[2], 10) : 1;
+fetchCopilotMetrics(daysToSubtract);
