@@ -4,7 +4,6 @@
 //Also add X-GitHub-Api-Version: 2022-11-28 header
 //Return the response from the API
 
-
 import axios from 'axios';
 import { Metrics } from '../model/Metrics';
 import organizationMockedResponse from '../assets/organization_response_sample.json';
@@ -24,9 +23,9 @@ const fetchFileList = async (): Promise<string[]> => {
     {
       headers: {
         Authorization: `Bearer ${GITHUB_TOKEN}`,
-        accept: 'application/vnd.github+json'
+        accept: 'application/vnd.github+json',
       },
-    }
+    },
   );
   return response.data.map((file: any) => file.path);
 };
@@ -39,7 +38,7 @@ const fetchFileContent = async (filePath: string): Promise<Metrics[]> => {
         Authorization: `Bearer ${GITHUB_TOKEN}`,
         Accept: 'application/vnd.github.v3.raw',
       },
-    }
+    },
   );
   return response.data;
 };
@@ -49,7 +48,7 @@ const combineMetrics = async (): Promise<Metrics[]> => {
   const allMetrics: Metrics[] = [];
 
   for (const filePath of fileList) {
-    console.log("Fetching data from file:", filePath);
+    console.log('Fetching data from file:', filePath);
     const fileMetrics = await fetchFileContent(filePath);
     allMetrics.push(...fileMetrics);
   }
@@ -57,21 +56,23 @@ const combineMetrics = async (): Promise<Metrics[]> => {
   return allMetrics;
 };
 
-
 export const getMetricsApi = async (token: string): Promise<Metrics[]> => {
   let response;
   let metricsData;
 
   if (process.env.VUE_APP_MOCKED_DATA === 'true') {
     if (process.env.VUE_APP_SCOPE === 'organization') {
-      combineMetrics().then((combinedMetrics) => {
-        response = combinedMetrics;
-        metricsData = response.map((item: any) => new Metrics(item));
-        console.log(JSON.stringify(combinedMetrics, null, 2));
-      }).catch((error) => {
-        console.error('Error combining metrics:', error);
-      });
-      response = organizationMockedResponse;
+      response = await combineMetrics();
+      // .then((combinedMetrics) => {
+      //   return combinedMetrics;
+      //   // response = combinedMetrics;
+      //   // metricsData = response.map((item: any) => new Metrics(item));
+      //   // console.log(JSON.stringify(combinedMetrics, null, 2));
+      // })
+      // .catch((error) => {
+      //   console.error('Error combining metrics:', error);
+      // });
+      //response = organizationMockedResponse;
     } else if (process.env.VUE_APP_SCOPE === 'enterprise') {
       response = enterpriseMockedResponse;
     } else {
@@ -79,8 +80,8 @@ export const getMetricsApi = async (token: string): Promise<Metrics[]> => {
         `Invalid VUE_APP_SCOPE value: ${process.env.VUE_APP_SCOPE}. Expected "organization" or "enterprise".`,
       );
     }
-
-    metricsData = response.map((item: any) => new Metrics(item));
+    console.log;
+    metricsData = response?.map((item: any) => new Metrics(item));
   } else {
     if (process.env.VUE_APP_SCOPE === 'organization') {
       response = await axios.get(
@@ -150,7 +151,7 @@ export const getTeams = async (token: string): Promise<Team[]> => {
 
 export const getTeamsMetrics = async (token: string): Promise<Metrics[]> => {
   const teams = await getTeams(token);
-  console.log(teams);
+  // console.log(teams);
 
   const teamsMetrics = await Promise.all(
     teams.map(async (team: Team) => {
@@ -190,7 +191,7 @@ export const getSeatsInformation = async (
     },
   );
 
-  console.log(response);
+  // console.log(response);
 
   return response.data;
 };
@@ -215,7 +216,7 @@ export const getSeatsByTeam = async (
     //loop through each team in the teams array and find this user. If found, increment the seat count for the team by 1
     teams.forEach((team) => {
       if (team.members.find((member) => member.id === user.id)) {
-        console.log(team.name, team.copilotSeats);
+        // console.log(team.name, team.copilotSeats);
         team.copilotSeats = ~~team.copilotSeats + 1;
       }
     });

@@ -241,7 +241,7 @@ export default defineComponent({
     getMetricsApi(token)
       .then((data) => {
         metrics.value = data;
-
+        console.log('Metrics are: ', data);
         // Set metricsReady to true after the call completes.
         metricsReady.value = true;
         const formatDate = (dateStr: string) => {
