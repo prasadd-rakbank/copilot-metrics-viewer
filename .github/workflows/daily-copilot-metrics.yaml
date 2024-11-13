@@ -3,7 +3,7 @@ name: Daily GitHub Copilot Metrics
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 8 * * *'
+    - cron: '0 4 * * *'
 
 jobs:
   fetch-copilot-metrics:
