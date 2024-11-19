@@ -168,7 +168,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, handleError, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import {
   getMetricsApi,
   getSeatsByTeam,
