@@ -10,7 +10,11 @@
 
       <v-toolbar-title>
         RAKBANK GitHub Copilot Metrics
-        <small class="text-grey">{{ startDate }} to {{ endDate }}</small>
+        <small
+          class="text-grey"
+          v-if="!apiError && metricsReady"
+          >{{ startDate }} to {{ endDate }}</small
+        >
       </v-toolbar-title>
       <v-select
         class="my-auto"
@@ -22,6 +26,7 @@
         :items="teams"
         v-model="selectedTeam"
         v-on:update:model-value="changeTeam"
+        v-if="!apiError && metricsReady"
         ><template v-slot:item="{ props, item }">
           <v-list-item
             v-bind="props"
@@ -32,10 +37,21 @@
 
     <!-- API Error Message -->
     <div
-      v-if="apiError"
       class="error-message"
-      v-html="apiError"
-    ></div>
+      v-if="apiError"
+    >
+      <div v-html="apiError"></div>
+      <div class="mt-2">
+        If your token has expired, please click below to update your token.<br />
+        <v-btn
+          class="mt-1"
+          @click="noToken = true"
+        >
+          Update GitHub Token
+        </v-btn>
+      </div>
+    </div>
+
     <div v-if="!apiError">
       <div
         v-if="itemName === 'invalid'"
@@ -66,8 +82,10 @@
                 :totalSeats="totalSeats"
                 :activeSeats="activeSeats"
                 :inactiveSeats="inactiveSeats"
-                :selectedTeam="selectedTeam"
+                :selectedTeam="selectedTeam || ''"
                 :teams="teams"
+                :start="startDate"
+                :end="endDate"
               />
               <LanguagesBreakdown
                 v-if="item === 'languages'"
@@ -150,7 +168,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, handleError, ref } from 'vue';
 import {
   getMetricsApi,
   getSeatsByTeam,
@@ -166,6 +184,7 @@ import LanguagesBreakdown from './LanguagesBreakdown.vue';
 import CopilotChatViewer from './CopilotChatViewer.vue';
 import ApiResponse from './ApiResponse.vue';
 import { Team } from '@/model/Team';
+import { formatDistanceToNowStrict } from 'date-fns';
 
 export default defineComponent({
   name: 'MainComponent',
@@ -182,7 +201,7 @@ export default defineComponent({
       location.reload();
     },
 
-    changeTeam(team: string) {
+    changeTeam(team: string | null) {
       console.log(team, this.selectedTeam);
     },
   },
@@ -209,7 +228,7 @@ export default defineComponent({
     return {
       tabItems: ['languages', 'copilot chat', 'api response'],
       tab: null,
-      selectedTeam: '',
+      selectedTeam: null,
       noToken: true,
       tokenValue: '',
     };
@@ -227,8 +246,9 @@ export default defineComponent({
     const metrics = ref<Metrics[]>([]);
     const teamMetrics = ref<Metrics[]>([]);
     const teams = ref<Team[]>([]);
-    let startDate = ref<string | undefined>(undefined);
-    let endDate = ref<string | undefined>(undefined);
+    let startDate = ref<string>('');
+    let endDate = ref<string>('');
+    let duration = ref<string>('');
     let totalSeats = ref(0);
     let activeSeats = ref(0);
     let inactiveSeats = ref(0);
@@ -243,7 +263,6 @@ export default defineComponent({
         metrics.value = data;
         console.log('Metrics are: ', data);
         // Set metricsReady to true after the call completes.
-        metricsReady.value = true;
         const formatDate = (dateStr: string) => {
           const options: Intl.DateTimeFormatOptions = {
             day: '2-digit',
@@ -255,48 +274,63 @@ export default defineComponent({
 
         startDate.value = formatDate(data[0].day);
         endDate.value = formatDate(data[data.length - 1].day);
+        duration.value = formatDistanceToNowStrict(new Date(data[0].day));
+      })
+      .then(() => {
+        return getSeatsInformation(token);
+      })
+      .then((data) => {
+        totalSeats.value = data.seat_breakdown.total;
+        activeSeats.value = data.seat_breakdown.active_this_cycle;
+        inactiveSeats.value = data.seat_breakdown.inactive_this_cycle;
+      })
+      .then(() => {
+        return getTeamsMetrics(token);
+      })
+      .then((teamMetricsData) => {
+        teamMetrics.value = teamMetricsData;
+      })
+      .then(() => {
+        return getTeams(token);
+      })
+      .then((teamsData) => {
+        console.log('Teams are: ', teamsData);
+        return getSeatsByTeam(token, teamsData);
+      })
+      .then((seatByTeamData) => {
+        teams.value = seatByTeamData;
       })
       .catch((error) => {
-        console.log(error);
-        // Check the status code of the error response
-        if (error.response && error.response.status) {
-          switch (error.response.status) {
-            case 401:
-              apiError.value =
-                '401 Unauthorized access - check if your token in the .env file is correct.';
-              break;
-            case 404:
-              apiError.value = `404 Not Found - is the organization '${process.env.VUE_APP_GITHUB_ORG}' correct?`;
-              break;
-            default:
-              apiError.value = error.message;
-              break;
-          }
-        } else {
-          // Update apiError with the error message
-          apiError.value = error.message;
+        console.log('Error', error);
+        apiError.value = handleError(error);
+      })
+      .finally(() => {
+        metricsReady.value = true;
+      });
+
+    const handleError = (error: any): string => {
+      console.log(error);
+      let apiError = '';
+      // Check the status code of the error response
+      if (error.response && error.response.status) {
+        switch (error.response.status) {
+          case 401:
+            apiError =
+              '401 Unauthorized access - check if your token in the .env file is correct.';
+            break;
+          case 404:
+            apiError = `404 Not Found - is the organization '${process.env.VUE_APP_GITHUB_ORG}' correct?`;
+            break;
+          default:
+            apiError = error.response.data.message;
+            break;
         }
-        // Add a new line to the apiError message
-        apiError.value +=
-          ' <br> If .env file is modified, restart the app for the changes to take effect.';
-      });
-
-    getSeatsInformation(token).then((data) => {
-      totalSeats.value = data.seat_breakdown.total;
-      activeSeats.value = data.seat_breakdown.active_this_cycle;
-      inactiveSeats.value = data.seat_breakdown.inactive_this_cycle;
-    });
-
-    getTeamsMetrics(token).then((data) => {
-      teamMetrics.value = data;
-    });
-
-    getTeams(token).then((data) => {
-      console.log('Teams are: ', data);
-      getSeatsByTeam(token, data).then((data) => {
-        teams.value = data;
-      });
-    });
+      } else {
+        // Update apiError with the error message
+        apiError = error.message;
+      }
+      return apiError;
+    };
 
     return {
       metricsReady,
@@ -304,6 +338,7 @@ export default defineComponent({
       apiError,
       startDate,
       endDate,
+      duration,
       totalSeats,
       activeSeats,
       inactiveSeats,
@@ -317,5 +352,7 @@ export default defineComponent({
 <style scoped>
 .error-message {
   color: red;
+  background-color: pink;
+  padding: 8px;
 }
 </style>

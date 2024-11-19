@@ -62,7 +62,9 @@
             <div class="text-normal-1 mt-1 text-cyan-darken-2 font-weight-bold">
               Max active engineers per day
             </div>
-            <div class="text-caption text-grey-darken-3">in last 4 weeks</div>
+            <div class="text-caption text-grey-darken-3">
+              in {{ currentMonth }}
+            </div>
           </div>
         </v-card-item>
       </v-card>
@@ -95,7 +97,9 @@
             >
               Inactive licenses
             </div>
-            <div class="text-caption text-grey-darken-3">in last 4 weeks</div>
+            <div class="text-caption text-grey-darken-3">
+              in {{ currentMonth }}
+            </div>
           </div>
         </v-card-item>
       </v-card>
@@ -115,7 +119,9 @@
             <div class="text-normal-1 mt-1 text-cyan-darken-2 font-weight-bold">
               Lines of code generated
             </div>
-            <div class="text-caption text-grey-darken-3">in last 4 weeks</div>
+            <div class="text-caption text-grey-darken-3">
+              {{ duration }}
+            </div>
           </div>
         </v-card-item>
       </v-card>
@@ -176,7 +182,7 @@
                 class="text-caption text-grey-darken-3"
                 v-if="!isHovering"
               >
-                in last 4 weeks
+                {{ duration }}
               </div>
             </div>
           </v-card-item>
@@ -212,7 +218,9 @@
             >
               License Cost
             </div>
-            <div class="text-caption text-grey-darken-3">in last 4 weeks</div>
+            <div class="text-caption text-grey-darken-3">
+              in {{ currentMonth }}
+            </div>
           </div>
         </v-card-item>
       </v-card>
@@ -239,7 +247,9 @@
             >
               Return on Investment
             </div>
-            <div class="text-caption text-grey-darken-3">in last 4 weeks</div>
+            <div class="text-caption text-grey-darken-3">
+              {{ duration }}
+            </div>
           </div>
         </v-card-item>
       </v-card>
@@ -280,7 +290,7 @@
 
     <v-divider class="mx-3 border-opacity-50"></v-divider>
     <div class="text-h4 font-weight-bold mt-3 mx-3">
-      Code Generation Analysis
+      Split for {{ cumulativeNumberLOCAccepted }} generated lines of code
     </div>
 
     <div class="tiles-container my-2">
@@ -327,7 +337,7 @@
                 class="text-caption text-grey-darken-3"
                 v-if="!isHovering"
               >
-                generated in last 4 weeks
+                generated {{ duration }}
               </div>
             </div>
           </v-card-item>
@@ -376,7 +386,7 @@
                 class="text-caption text-grey-darken-3"
                 v-if="!isHovering"
               >
-                generated in last 4 weeks
+                generated {{ duration }}
               </div>
             </div>
           </v-card-item>
@@ -425,7 +435,7 @@
                 class="text-caption text-grey-darken-3"
                 v-if="!isHovering"
               >
-                generated in last 4 weeks
+                generated {{ duration }}
               </div>
             </div>
           </v-card-item>
@@ -455,7 +465,7 @@
               Non-code files
             </div>
             <div class="text-caption text-grey-darken-3">
-              generated in last 4 weeks
+              generated {{ duration }}
             </div>
           </div>
         </v-card-item>
@@ -481,6 +491,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Team } from '@/model/Team';
+import { format, formatDistanceStrict, addDays } from 'date-fns';
 
 ChartJS.register(
   ArcElement,
@@ -523,6 +534,14 @@ export default defineComponent({
     },
     teams: {
       type: Array<Team>,
+      required: true,
+    },
+    start: {
+      type: String,
+      required: true,
+    },
+    end: {
+      type: String,
       required: true,
     },
   },
@@ -603,6 +622,14 @@ export default defineComponent({
     let totalGenetedTests = ref(0);
     let totalGeneratedConfigurations = ref(0);
     let totalOtherGeneratedCode = ref(0);
+    let duration = ref(
+      formatDistanceStrict(
+        new Date(props.start),
+        addDays(new Date(props.end), 1),
+      ),
+    );
+    console.log('Recalculating duration to be: ', duration);
+    let currentMonth = ref(format(new Date(), 'MMMM yyyy'));
 
     //Acceptance Rate
     const acceptanceRateChartData = ref<{ labels: string[]; datasets: any[] }>({
@@ -663,6 +690,8 @@ export default defineComponent({
 
     const refreshData = () => {
       const teamName = toRef(props, 'selectedTeam').value;
+
+      console.log('Recalculating duration to be: ', duration.value);
       console.log('Refreshing for team: ', teamName);
       const data =
         teamName === null || teamName === ''
@@ -672,6 +701,16 @@ export default defineComponent({
             );
 
       console.log('data is: ', data, toRef(props, 'teamMetrics').value);
+      if (data.length > 0) {
+        duration.value =
+          'in last ' +
+          formatDistanceStrict(
+            new Date(data[0].day),
+            addDays(data[data.length - 1].day, 1),
+          );
+      } else {
+        duration.value = '';
+      }
 
       cumulativeNumberAcceptances.value = 0;
       data.map((m: Metrics) => {
@@ -890,6 +929,8 @@ export default defineComponent({
       timePerLineInMinutes,
       developerRatePerDay,
       copilotLicenseCost,
+      currentMonth,
+      duration,
     };
   },
 });

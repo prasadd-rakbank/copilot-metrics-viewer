@@ -9,6 +9,7 @@ import { Metrics } from '../model/Metrics';
 import enterpriseMockedResponse from '../assets/enterprise_response_sample.json';
 
 import { Team, TeamMember } from '@/model/Team';
+import { compareAsc } from 'date-fns';
 
 const GITHUB_API_URL = 'https://api.github.com';
 const REPO_OWNER = 'prasadd-rakbank';
@@ -59,7 +60,7 @@ const combineMetrics = async (): Promise<Metrics[]> => {
     allMetrics.push(...fileMetrics);
   }
 
-  return allMetrics;
+  return allMetrics.sort((a, b) => compareAsc(a.day, b.day));
 };
 
 export const getMetricsApi = async (token: string): Promise<Metrics[]> => {
