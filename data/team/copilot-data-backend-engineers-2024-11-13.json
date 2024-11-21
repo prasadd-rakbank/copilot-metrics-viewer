@@ -1,0 +1,78 @@
+[
+  {
+    "day": "2024-11-13",
+    "total_suggestions_count": 270,
+    "total_acceptances_count": 99,
+    "total_lines_suggested": 462,
+    "total_lines_accepted": 134,
+    "total_active_users": 7,
+    "total_chat_acceptances": 15,
+    "total_chat_turns": 92,
+    "total_active_chat_users": 9,
+    "breakdown": [
+      {
+        "language": "java",
+        "editor": "vscode",
+        "suggestions_count": 10,
+        "acceptances_count": 1,
+        "lines_suggested": 11,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "ini",
+        "editor": "vscode",
+        "suggestions_count": 3,
+        "acceptances_count": 0,
+        "lines_suggested": 3,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "c#",
+        "editor": "visual_studio",
+        "suggestions_count": 1,
+        "acceptances_count": 1,
+        "lines_suggested": 1,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 191,
+        "acceptances_count": 77,
+        "lines_suggested": 349,
+        "lines_accepted": 112,
+        "active_users": 5
+      },
+      {
+        "language": "sql",
+        "editor": "jetbrains",
+        "suggestions_count": 9,
+        "acceptances_count": 1,
+        "lines_suggested": 9,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "ini",
+        "editor": "jetbrains",
+        "suggestions_count": 55,
+        "acceptances_count": 19,
+        "lines_suggested": 86,
+        "lines_accepted": 19,
+        "active_users": 4
+      },
+      {
+        "language": "yaml",
+        "editor": "jetbrains",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 3,
+        "lines_accepted": 0,
+        "active_users": 1
+      }
+    ]
+  }
+]

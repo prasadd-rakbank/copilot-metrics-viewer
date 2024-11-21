@@ -1,0 +1,96 @@
+[
+  {
+    "day": "2024-11-14",
+    "total_suggestions_count": 1092,
+    "total_acceptances_count": 304,
+    "total_lines_suggested": 1616,
+    "total_lines_accepted": 278,
+    "total_active_users": 13,
+    "total_chat_acceptances": 14,
+    "total_chat_turns": 172,
+    "total_active_chat_users": 11,
+    "breakdown": [
+      {
+        "language": "javascriptreact",
+        "editor": "vscode",
+        "suggestions_count": 199,
+        "acceptances_count": 45,
+        "lines_suggested": 281,
+        "lines_accepted": 28,
+        "active_users": 2
+      },
+      {
+        "language": "typescriptreact",
+        "editor": "vscode",
+        "suggestions_count": 35,
+        "acceptances_count": 13,
+        "lines_suggested": 55,
+        "lines_accepted": 15,
+        "active_users": 2
+      },
+      {
+        "language": "javascript",
+        "editor": "vscode",
+        "suggestions_count": 554,
+        "acceptances_count": 154,
+        "lines_suggested": 690,
+        "lines_accepted": 108,
+        "active_users": 11
+      },
+      {
+        "language": "java",
+        "editor": "vscode",
+        "suggestions_count": 180,
+        "acceptances_count": 68,
+        "lines_suggested": 279,
+        "lines_accepted": 100,
+        "active_users": 2
+      },
+      {
+        "language": "typescript",
+        "editor": "vscode",
+        "suggestions_count": 33,
+        "acceptances_count": 16,
+        "lines_suggested": 38,
+        "lines_accepted": 10,
+        "active_users": 2
+      },
+      {
+        "language": "ini",
+        "editor": "vscode",
+        "suggestions_count": 77,
+        "acceptances_count": 7,
+        "lines_suggested": 248,
+        "lines_accepted": 16,
+        "active_users": 2
+      },
+      {
+        "language": "json",
+        "editor": "vscode",
+        "suggestions_count": 8,
+        "acceptances_count": 0,
+        "lines_suggested": 18,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "json with comments",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "dotenv",
+        "editor": "vscode",
+        "suggestions_count": 5,
+        "acceptances_count": 1,
+        "lines_suggested": 6,
+        "lines_accepted": 1,
+        "active_users": 2
+      }
+    ]
+  }
+]

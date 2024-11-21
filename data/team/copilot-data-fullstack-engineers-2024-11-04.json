@@ -1,0 +1,132 @@
+[
+  {
+    "day": "2024-11-04",
+    "total_suggestions_count": 864,
+    "total_acceptances_count": 207,
+    "total_lines_suggested": 1372,
+    "total_lines_accepted": 188,
+    "total_active_users": 13,
+    "total_chat_acceptances": 12,
+    "total_chat_turns": 81,
+    "total_active_chat_users": 10,
+    "breakdown": [
+      {
+        "language": "javascriptreact",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "typescriptreact",
+        "editor": "vscode",
+        "suggestions_count": 53,
+        "acceptances_count": 10,
+        "lines_suggested": 63,
+        "lines_accepted": 6,
+        "active_users": 2
+      },
+      {
+        "language": "unknown",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "javascript",
+        "editor": "vscode",
+        "suggestions_count": 481,
+        "acceptances_count": 136,
+        "lines_suggested": 668,
+        "lines_accepted": 91,
+        "active_users": 8
+      },
+      {
+        "language": "java",
+        "editor": "vscode",
+        "suggestions_count": 19,
+        "acceptances_count": 7,
+        "lines_suggested": 59,
+        "lines_accepted": 1,
+        "active_users": 3
+      },
+      {
+        "language": "xml",
+        "editor": "vscode",
+        "suggestions_count": 5,
+        "acceptances_count": 0,
+        "lines_suggested": 14,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "typescript",
+        "editor": "vscode",
+        "suggestions_count": 19,
+        "acceptances_count": 5,
+        "lines_suggested": 24,
+        "lines_accepted": 5,
+        "active_users": 2
+      },
+      {
+        "language": "tex",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "dockerfile",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "json",
+        "editor": "vscode",
+        "suggestions_count": 161,
+        "acceptances_count": 24,
+        "lines_suggested": 306,
+        "lines_accepted": 19,
+        "active_users": 2
+      },
+      {
+        "language": "scss",
+        "editor": "vscode",
+        "suggestions_count": 2,
+        "acceptances_count": 1,
+        "lines_suggested": 3,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "dotenv",
+        "editor": "vscode",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 2,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "c#",
+        "editor": "visual_studio",
+        "suggestions_count": 118,
+        "acceptances_count": 24,
+        "lines_suggested": 229,
+        "lines_accepted": 65,
+        "active_users": 3
+      }
+    ]
+  }
+]

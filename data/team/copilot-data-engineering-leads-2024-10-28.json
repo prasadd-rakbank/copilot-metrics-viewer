@@ -1,0 +1,60 @@
+[
+  {
+    "day": "2024-10-28",
+    "total_suggestions_count": 97,
+    "total_acceptances_count": 17,
+    "total_lines_suggested": 169,
+    "total_lines_accepted": 17,
+    "total_active_users": 5,
+    "total_chat_acceptances": 19,
+    "total_chat_turns": 62,
+    "total_active_chat_users": 2,
+    "breakdown": [
+      {
+        "language": "javascript",
+        "editor": "vscode",
+        "suggestions_count": 37,
+        "acceptances_count": 12,
+        "lines_suggested": 53,
+        "lines_accepted": 8,
+        "active_users": 3
+      },
+      {
+        "language": "html",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "hcl",
+        "editor": "vscode",
+        "suggestions_count": 42,
+        "acceptances_count": 2,
+        "lines_suggested": 92,
+        "lines_accepted": 2,
+        "active_users": 2
+      },
+      {
+        "language": "yaml",
+        "editor": "vscode",
+        "suggestions_count": 4,
+        "acceptances_count": 0,
+        "lines_suggested": 4,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 13,
+        "acceptances_count": 3,
+        "lines_suggested": 19,
+        "lines_accepted": 7,
+        "active_users": 2
+      }
+    ]
+  }
+]

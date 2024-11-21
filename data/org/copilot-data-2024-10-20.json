@@ -1,0 +1,87 @@
+[
+  {
+    "day": "2024-10-20",
+    "total_suggestions_count": 393,
+    "total_acceptances_count": 116,
+    "total_lines_suggested": 1454,
+    "total_lines_accepted": 105,
+    "total_active_users": 9,
+    "total_chat_acceptances": 27,
+    "total_chat_turns": 125,
+    "total_active_chat_users": 9,
+    "breakdown": [
+      {
+        "language": "unknown",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "javascript",
+        "editor": "vscode",
+        "suggestions_count": 214,
+        "acceptances_count": 83,
+        "lines_suggested": 290,
+        "lines_accepted": 56,
+        "active_users": 5
+      },
+      {
+        "language": "python",
+        "editor": "vscode",
+        "suggestions_count": 19,
+        "acceptances_count": 7,
+        "lines_suggested": 33,
+        "lines_accepted": 15,
+        "active_users": 4
+      },
+      {
+        "language": "xml",
+        "editor": "vscode",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 7,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "typescript",
+        "editor": "vscode",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 2,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "json",
+        "editor": "vscode",
+        "suggestions_count": 73,
+        "acceptances_count": 0,
+        "lines_suggested": 850,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 80,
+        "acceptances_count": 25,
+        "lines_suggested": 264,
+        "lines_accepted": 32,
+        "active_users": 3
+      },
+      {
+        "language": "yaml",
+        "editor": "jetbrains",
+        "suggestions_count": 2,
+        "acceptances_count": 1,
+        "lines_suggested": 7,
+        "lines_accepted": 2,
+        "active_users": 2
+      }
+    ]
+  }
+]

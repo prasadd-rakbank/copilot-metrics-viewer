@@ -14,12 +14,13 @@ import { compareAsc } from 'date-fns';
 const GITHUB_API_URL = 'https://api.github.com';
 const REPO_OWNER = 'prasadd-rakbank';
 const REPO_NAME = 'copilot-metrics-viewer';
-const DATA_DIR = 'data';
+const DATA_DIR = 'data/org';
+const TEAM_DIR = 'data/team';
 const GITHUB_TOKEN = localStorage.getItem('token');
 
-const fetchFileList = async (): Promise<string[]> => {
+const fetchFileList = async (path: string): Promise<string[]> => {
   const response = await axios.get(
-    `${GITHUB_API_URL}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DATA_DIR}`,
+    `${GITHUB_API_URL}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`,
     {
       headers: {
         Authorization: `Bearer ${GITHUB_TOKEN}`,
@@ -50,8 +51,8 @@ const fetchFileContent = async (filePath: string): Promise<Metrics[]> => {
   return apiResponse.data;
 };
 
-const combineMetrics = async (): Promise<Metrics[]> => {
-  const fileList = await fetchFileList();
+const combineMetrics = async (path: string = DATA_DIR): Promise<Metrics[]> => {
+  const fileList = await fetchFileList(path);
   const allMetrics: Metrics[] = [];
 
   for (const filePath of fileList) {
@@ -70,16 +71,6 @@ export const getMetricsApi = async (token: string): Promise<Metrics[]> => {
   if (process.env.VUE_APP_MOCKED_DATA === 'true') {
     if (process.env.VUE_APP_SCOPE === 'organization') {
       response = await combineMetrics();
-      // .then((combinedMetrics) => {
-      //   return combinedMetrics;
-      //   // response = combinedMetrics;
-      //   // metricsData = response.map((item: any) => new Metrics(item));
-      //   // console.log(JSON.stringify(combinedMetrics, null, 2));
-      // })
-      // .catch((error) => {
-      //   console.error('Error combining metrics:', error);
-      // });
-      //response = organizationMockedResponse;
     } else if (process.env.VUE_APP_SCOPE === 'enterprise') {
       response = enterpriseMockedResponse;
     } else {
@@ -157,31 +148,34 @@ export const getTeams = async (token: string): Promise<Team[]> => {
 };
 
 export const getTeamsMetrics = async (token: string): Promise<Metrics[]> => {
-  const teams = await getTeams(token);
-  // console.log(teams);
+  return combineMetrics(TEAM_DIR);
+  // const teams = await getTeams(token);
+  // const fileList = await fetchFileList(TEAM_DIR);
 
-  const teamsMetrics = await Promise.all(
-    teams.map(async (team: Team) => {
-      const response = await axios.get(
-        `https://api.github.com/orgs/${process.env.VUE_APP_GITHUB_ORG}/team/${team.slug}/copilot/usage`,
-        {
-          headers: {
-            Accept: 'application/vnd.github+json',
-            Authorization: `Bearer ${token}`,
-            'X-GitHub-Api-Version': '2022-11-28',
-          },
-        },
-      );
+  // // console.log(teams);
 
-      return response.data.map((item: any) => {
-        const metric = new Metrics(item);
-        metric.team = team.name;
-        return metric;
-      });
-    }),
-  );
+  // const teamsMetrics = await Promise.all(
+  //   teams.map(async (team: Team) => {
+  //     const response = await axios.get(
+  //       `https://api.github.com/orgs/${process.env.VUE_APP_GITHUB_ORG}/team/${team.slug}/copilot/usage`,
+  //       {
+  //         headers: {
+  //           Accept: 'application/vnd.github+json',
+  //           Authorization: `Bearer ${token}`,
+  //           'X-GitHub-Api-Version': '2022-11-28',
+  //         },
+  //       },
+  //     );
 
-  return teamsMetrics.flat();
+  //     return response.data.map((item: any) => {
+  //       const metric = new Metrics(item);
+  //       metric.team = team.name;
+  //       return metric;
+  //     });
+  //   }),
+  // );
+
+  // return teamsMetrics.flat();
 };
 
 export const getSeatsInformation = async (

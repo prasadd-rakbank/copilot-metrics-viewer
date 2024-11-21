@@ -1,0 +1,87 @@
+[
+  {
+    "day": "2024-11-12",
+    "total_suggestions_count": 81,
+    "total_acceptances_count": 29,
+    "total_lines_suggested": 124,
+    "total_lines_accepted": 31,
+    "total_active_users": 6,
+    "total_chat_acceptances": 1,
+    "total_chat_turns": 22,
+    "total_active_chat_users": 3,
+    "breakdown": [
+      {
+        "language": "javascript",
+        "editor": "vscode",
+        "suggestions_count": 25,
+        "acceptances_count": 6,
+        "lines_suggested": 26,
+        "lines_accepted": 4,
+        "active_users": 3
+      },
+      {
+        "language": "java",
+        "editor": "vscode",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 2,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "typescript",
+        "editor": "vscode",
+        "suggestions_count": 29,
+        "acceptances_count": 13,
+        "lines_suggested": 42,
+        "lines_accepted": 19,
+        "active_users": 2
+      },
+      {
+        "language": "vue",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 2,
+        "lines_suggested": 1,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "ini",
+        "editor": "vscode",
+        "suggestions_count": 6,
+        "acceptances_count": 1,
+        "lines_suggested": 9,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "yaml",
+        "editor": "vscode",
+        "suggestions_count": 4,
+        "acceptances_count": 2,
+        "lines_suggested": 5,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 6,
+        "acceptances_count": 1,
+        "lines_suggested": 31,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "ini",
+        "editor": "jetbrains",
+        "suggestions_count": 8,
+        "acceptances_count": 4,
+        "lines_suggested": 8,
+        "lines_accepted": 4,
+        "active_users": 2
+      }
+    ]
+  }
+]

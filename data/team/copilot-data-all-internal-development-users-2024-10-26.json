@@ -1,0 +1,33 @@
+[
+  {
+    "day": "2024-10-26",
+    "total_suggestions_count": 43,
+    "total_acceptances_count": 8,
+    "total_lines_suggested": 48,
+    "total_lines_accepted": 7,
+    "total_active_users": 4,
+    "total_chat_acceptances": 1,
+    "total_chat_turns": 12,
+    "total_active_chat_users": 3,
+    "breakdown": [
+      {
+        "language": "javascript",
+        "editor": "vscode",
+        "suggestions_count": 32,
+        "acceptances_count": 8,
+        "lines_suggested": 33,
+        "lines_accepted": 7,
+        "active_users": 4
+      },
+      {
+        "language": "css",
+        "editor": "vscode",
+        "suggestions_count": 11,
+        "acceptances_count": 0,
+        "lines_suggested": 15,
+        "lines_accepted": 0,
+        "active_users": 1
+      }
+    ]
+  }
+]
