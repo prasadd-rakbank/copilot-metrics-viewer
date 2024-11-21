@@ -1,0 +1,87 @@
+[
+  {
+    "day": "2024-11-20",
+    "total_suggestions_count": 507,
+    "total_acceptances_count": 170,
+    "total_lines_suggested": 906,
+    "total_lines_accepted": 110,
+    "total_active_users": 11,
+    "total_chat_acceptances": 6,
+    "total_chat_turns": 124,
+    "total_active_chat_users": 9,
+    "breakdown": [
+      {
+        "language": "javascriptreact",
+        "editor": "vscode",
+        "suggestions_count": 49,
+        "acceptances_count": 10,
+        "lines_suggested": 51,
+        "lines_accepted": 4,
+        "active_users": 2
+      },
+      {
+        "language": "typescriptreact",
+        "editor": "vscode",
+        "suggestions_count": 82,
+        "acceptances_count": 42,
+        "lines_suggested": 397,
+        "lines_accepted": 26,
+        "active_users": 4
+      },
+      {
+        "language": "javascript",
+        "editor": "vscode",
+        "suggestions_count": 252,
+        "acceptances_count": 75,
+        "lines_suggested": 315,
+        "lines_accepted": 52,
+        "active_users": 7
+      },
+      {
+        "language": "java",
+        "editor": "vscode",
+        "suggestions_count": 68,
+        "acceptances_count": 27,
+        "lines_suggested": 78,
+        "lines_accepted": 18,
+        "active_users": 2
+      },
+      {
+        "language": "typescript",
+        "editor": "vscode",
+        "suggestions_count": 40,
+        "acceptances_count": 13,
+        "lines_suggested": 42,
+        "lines_accepted": 9,
+        "active_users": 4
+      },
+      {
+        "language": "json",
+        "editor": "vscode",
+        "suggestions_count": 12,
+        "acceptances_count": 2,
+        "lines_suggested": 14,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "scss",
+        "editor": "vscode",
+        "suggestions_count": 2,
+        "acceptances_count": 1,
+        "lines_suggested": 2,
+        "lines_accepted": 0,
+        "active_users": 2
+      },
+      {
+        "language": "json with comments",
+        "editor": "vscode",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 7,
+        "lines_accepted": 0,
+        "active_users": 1
+      }
+    ]
+  }
+]

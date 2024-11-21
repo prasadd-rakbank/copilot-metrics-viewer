@@ -1,0 +1,78 @@
+[
+  {
+    "day": "2024-11-19",
+    "total_suggestions_count": 151,
+    "total_acceptances_count": 46,
+    "total_lines_suggested": 375,
+    "total_lines_accepted": 57,
+    "total_active_users": 8,
+    "total_chat_acceptances": 19,
+    "total_chat_turns": 129,
+    "total_active_chat_users": 11,
+    "breakdown": [
+      {
+        "language": "java",
+        "editor": "vscode",
+        "suggestions_count": 34,
+        "acceptances_count": 13,
+        "lines_suggested": 41,
+        "lines_accepted": 9,
+        "active_users": 3
+      },
+      {
+        "language": "html",
+        "editor": "vscode",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 2,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 94,
+        "acceptances_count": 31,
+        "lines_suggested": 298,
+        "lines_accepted": 46,
+        "active_users": 5
+      },
+      {
+        "language": "xml",
+        "editor": "jetbrains",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 3,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "dockerfile",
+        "editor": "jetbrains",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "ini",
+        "editor": "jetbrains",
+        "suggestions_count": 13,
+        "acceptances_count": 1,
+        "lines_suggested": 18,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "yaml",
+        "editor": "jetbrains",
+        "suggestions_count": 6,
+        "acceptances_count": 1,
+        "lines_suggested": 12,
+        "lines_accepted": 1,
+        "active_users": 2
+      }
+    ]
+  }
+]
