@@ -64,6 +64,78 @@ const combineMetrics = async (path: string = DATA_DIR): Promise<Metrics[]> => {
   return allMetrics.sort((a, b) => compareAsc(a.day, b.day));
 };
 
+// Function to extract the desired string
+function extractTeamName(fileName: string): string {
+  const match = fileName.match(/copilot-data-(.*)-\d{4}-\d{2}-\d{2}\.json/);
+  return match ? match[1] : '';
+}
+
+const combineTeamMetrics = async (
+  path: string = TEAM_DIR,
+): Promise<Metrics[]> => {
+  const fileList = await fetchFileList(path);
+  // Group files by team-name
+  const groupedFiles: { [key: string]: string[] } = {};
+
+  fileList.forEach((file) => {
+    const teamName = extractTeamName(file);
+    if (!groupedFiles[teamName]) {
+      groupedFiles[teamName] = [];
+    }
+    groupedFiles[teamName].push(file);
+  });
+
+  console.log('Grouped Files:', groupedFiles);
+
+  const teamsMetrics = await Promise.all(
+    Object.keys(groupedFiles).map(async (team: string) => {
+      const teamFiles = groupedFiles[team];
+      const allMetrics: Metrics[] = [];
+      for (const filePath of teamFiles) {
+        console.log('Fetching data from file:', filePath);
+        let fileMetrics: Metrics[] = await fetchFileContent(filePath);
+        fileMetrics = fileMetrics.map((metric) => {
+          metric.team = team;
+          return metric;
+        });
+        allMetrics.push(...fileMetrics);
+      }
+      return allMetrics.sort((a, b) => compareAsc(a.day, b.day));
+      // teamFiles.forEach((file) => {
+      //   fetchFileContent(file);
+      // });
+      // const response = await axios.get(
+      //   `https://api.github.com/orgs/${process.env.VUE_APP_GITHUB_ORG}/team/${team.slug}/copilot/usage`,
+      //   {
+      //     headers: {
+      //       Accept: 'application/vnd.github+json',
+      //       Authorization: `Bearer ${token}`,
+      //       'X-GitHub-Api-Version': '2022-11-28',
+      //     },
+      //   },
+      // );
+
+      // return response.data.map((item: any) => {
+      //   const metric = new Metrics(item);
+      //   metric.team = team.name;
+      //   return metric;
+      // });
+      return allMetrics;
+    }),
+  );
+  return teamsMetrics.flat();
+
+  const allMetrics: Metrics[] = [];
+
+  for (const filePath of fileList) {
+    console.log('Fetching data from file:', filePath);
+    const fileMetrics = await fetchFileContent(filePath);
+    allMetrics.push(...fileMetrics);
+  }
+
+  return allMetrics.sort((a, b) => compareAsc(a.day, b.day));
+};
+
 export const getMetricsApi = async (token: string): Promise<Metrics[]> => {
   let response;
   let metricsData;
@@ -148,7 +220,9 @@ export const getTeams = async (token: string): Promise<Team[]> => {
 };
 
 export const getTeamsMetrics = async (token: string): Promise<Metrics[]> => {
-  return combineMetrics(TEAM_DIR);
+  const metrics = await combineTeamMetrics(TEAM_DIR);
+  console.log('Teams Metrics:', metrics);
+  return metrics;
   // const teams = await getTeams(token);
   // const fileList = await fetchFileList(TEAM_DIR);
 

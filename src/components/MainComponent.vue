@@ -22,7 +22,7 @@
         chips
         label="Choose A Team (Leave Blank for All)"
         item-title="name"
-        item-value="name"
+        item-value="slug"
         :items="teams"
         v-model="selectedTeam"
         v-on:update:model-value="changeTeam"

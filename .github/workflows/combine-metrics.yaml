@@ -1,0 +1,35 @@
+name: Combine Multiple GitHub Copilot Metrics
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 4 * * *'
+
+jobs:
+  fetch-copilot-metrics:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install axios
+
+      - name: Combine GitHub Copilot metrics
+        env:
+          GITHUB_TOKEN: ${{ secrets.METRICS_GITHUB_TOKEN }}
+        run: node combine-copilot-metrics.js
+
+      - name: Commit and push metrics file
+        run: |
+          git config --global user.name 'prasadd-rakbank'
+          git config --global user.email 'prasad.edlabadkar@rakbank.ae'
+          git add data/copilot-combined=data-*.json
+          git commit -m "Combine daily GitHub Copilot metrics on $(date +'%Y-%m-%d')"
+          git push
