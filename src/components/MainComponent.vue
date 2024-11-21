@@ -285,7 +285,7 @@ export default defineComponent({
         inactiveSeats.value = data.seat_breakdown.inactive_this_cycle;
       })
       .then(() => {
-        return getTeamsMetrics(token);
+        return getTeamsMetrics();
       })
       .then((teamMetricsData) => {
         teamMetrics.value = teamMetricsData;
