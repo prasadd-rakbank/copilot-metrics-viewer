@@ -6,8 +6,8 @@ const { compareAsc } = require('date-fns');
 const GITHUB_API_URL = 'https://api.github.com';
 const REPO_OWNER = 'prasadd-rakbank';
 const REPO_NAME = 'copilot-metrics-viewer';
-const DATA_DIR = 'data/org';
-const TEAM_DIR = 'data/team';
+const DATA_DIR = 'data/combined/org';
+const TEAM_DIR = 'data/combined/team';
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
 if (!GITHUB_TOKEN) {
