@@ -30,6 +30,7 @@ jobs:
         run: |
           git config --global user.name 'prasadd-rakbank'
           git config --global user.email 'prasad.edlabadkar@rakbank.ae'
-          git add data/copilot-data-*.json
+          git add data/org/copilot-data-*.json
+          git add data/team/copilot-data-*.json
           git commit -m "Add daily GitHub Copilot metrics for $(date +'%Y-%m-%d')"
           git push
