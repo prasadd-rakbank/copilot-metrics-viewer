@@ -6,6 +6,8 @@ const { compareAsc } = require('date-fns');
 const GITHUB_API_URL = 'https://api.github.com';
 const REPO_OWNER = 'prasadd-rakbank';
 const REPO_NAME = 'copilot-metrics-viewer';
+const INPUT_DATA_DIR = 'data/org';
+const INPUT_TEAM_DIR = 'data/team';
 const DATA_DIR = 'data/combined/org';
 const TEAM_DIR = 'data/combined/team';
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
@@ -104,7 +106,7 @@ const main = async () => {
   try {
     const currentDate = new Date().toISOString().split('T')[0];
 
-    const orgMetrics = await combineMetrics(DATA_DIR);
+    const orgMetrics = await combineMetrics(INPUT_DATA_DIR);
     saveMetricsToFile(
       orgMetrics,
       path.join(
@@ -113,7 +115,7 @@ const main = async () => {
       ),
     );
 
-    const teamMetrics = await combineTeamMetrics(TEAM_DIR);
+    const teamMetrics = await combineTeamMetrics(INPUT_TEAM_DIR);
     saveMetricsToFile(
       teamMetrics,
       path.join(
