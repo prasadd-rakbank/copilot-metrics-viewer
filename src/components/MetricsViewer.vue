@@ -1,477 +1,158 @@
 <template>
   <div>
-    <div class="text-h4 font-weight-bold mt-3 mx-3">Usage Analysis</div>
+    <div class="text-h4 mt-3 mx-3 text-gray">License Usage Analysis</div>
     <div class="tiles-container mb-2">
-      <!-- Acceptance Rate Tile -->
-      <v-card
-        elevation="4"
-        color="cyan-lighten-3"
-        variant="elevated"
-        class="mx-3 my-3"
-        style="width: 250px; height: 180px"
-      >
-        <v-card-item>
-          <div class="my-2">
-            <div
-              class="text-black font-weight-bold"
-              v-if="selectedTeam === null || selectedTeam === ''"
-            >
-              {{ activeSeats }} active out of {{ totalSeats }} licenses
-            </div>
-            <div
-              class="text-black font-weight-bold"
-              v-if="!(selectedTeam === null || selectedTeam === '')"
-            >
-              {{ totalActiveUsers }}
-              active out of
-              {{
-                teams.find((t: Team) => t.name === selectedTeam)?.copilotSeats
-              }}
-              licenses
-            </div>
-            <v-progress-linear
-              :location="null"
-              bg-color="grey-darken-3"
-              buffer-color="cyan-darken-1"
-              buffer-opacity="1"
-              :buffer-value="activeSeats"
-              color="cyan-darken-4"
-              height="16"
-              :max="totalSeats"
-              min="0"
-              :model-value="totalActiveUsers"
-              rounded
-              v-if="selectedTeam === null || selectedTeam === ''"
-            >
-            </v-progress-linear>
-            <v-progress-linear
-              :location="null"
-              bg-color="grey-darken-3"
-              color="cyan-darken-4"
-              height="16"
-              :max="teams.find((t: Team) => t.name === selectedTeam)?.copilotSeats"
-              min="0"
-              :model-value="totalActiveUsers"
-              rounded
-              v-if="!(selectedTeam === null || selectedTeam === '')"
-            >
-            </v-progress-linear>
-            <div class="text-h3 font-weight-bold text-cyan-darken-4 mt-2">
-              {{ totalActiveUsers }}
-            </div>
-            <div class="text-normal-1 mt-1 text-cyan-darken-2 font-weight-bold">
-              Max active engineers per day
-            </div>
-            <div class="text-caption text-grey-darken-3">
-              in {{ currentMonth }}
-            </div>
-          </div>
-        </v-card-item>
-      </v-card>
+      <ProgressCard
+        :activeSeats="activeSeats"
+        :totalSeats="totalSeats"
+        :totalActiveUsers="totalActiveUsers"
+        :selectedTeam="selectedTeam"
+        :teams="teams"
+        :currentMonth="currentMonth"
+      />
 
-      <v-card
-        elevation="4"
-        :color="(inactiveSeats > 0 ? 'red' : 'green') + '-lighten-3'"
-        variant="elevated"
-        class="mx-3 my-3"
-        style="width: 250px; height: 180px"
+      <StatusCard
         v-if="selectedTeam === null || selectedTeam === ''"
-      >
-        <v-card-item>
-          <div class="my-5">
-            <div
-              :class="
-                'text-h3 font-weight-bold text-' +
-                (inactiveSeats > 0 ? 'red' : 'green') +
-                '-darken-4'
-              "
-            >
-              {{ inactiveSeats }}
-            </div>
-            <div
-              :class="
-                'text-normal-1 mt-1 text-' +
-                (inactiveSeats > 0 ? 'red' : 'green') +
-                '-darken-2 font-weight-bold'
-              "
-            >
-              Inactive licenses
-            </div>
-            <div class="text-caption text-grey-darken-3">
-              in {{ currentMonth }}
-            </div>
-          </div>
-        </v-card-item>
-      </v-card>
+        :value="inactiveSeats"
+        label="Inactive licenses"
+        :month="currentMonth"
+      />
 
-      <v-card
-        elevation="4"
-        color="cyan-lighten-3"
-        variant="elevated"
-        class="mx-3 my-3"
-        style="width: 250px; height: 180px"
-      >
-        <v-card-item>
-          <div class="my-5">
-            <div class="text-h3 font-weight-bold text-cyan-darken-4">
-              {{ cumulativeNumberLOCAccepted }}
-            </div>
-            <div class="text-normal-1 mt-1 text-cyan-darken-2 font-weight-bold">
-              Lines of code generated
-            </div>
-            <div class="text-caption text-grey-darken-3">
-              {{ duration }}
-            </div>
-          </div>
-        </v-card-item>
-      </v-card>
-    </div>
-    <v-divider class="mx-3 border-opacity-50"></v-divider>
-    <div class="text-h4 font-weight-bold mt-3 mx-3">
-      Cost vs Benefit Analysis
-    </div>
-    <div class="tiles-container mb-2">
-      <!-- <div class="text-h3 my-auto font-weight-bold">::</div> -->
-      <v-hover v-slot="{ isHovering, props }">
-        <v-card
-          elevation="4"
-          color="brown-lighten-3"
-          variant="elevated"
-          class="mx-3 my-3"
-          style="width: 220px; height: 175px"
-          v-bind="props"
-        >
-          <v-card-item>
-            <div class="my-5">
-              <div class="text-h3 font-weight-bold text-brown-darken-4">
-                <small
-                  class="text-button font-weight-bold text-brown-darken-2"
-                  style="margin-right: -0.5rem"
-                  >AED</small
-                >
-                {{
-                  costAvoidance.toLocaleString('en-US', {
-                    style: 'decimal',
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
-                  })
-                }}
-              </div>
-              <div
-                class="text-normal-1 mt-1 text-brown-darken-2 font-weight-bold"
-              >
-                Cost Avoided *
-                <v-expand-transition>
-                  <div
-                    v-if="isHovering"
-                    class="d-flex transition-fast-in-fast-out bg-brown-darken-3 text-caption px-3 py-3 rounded"
-                    style="
-                      height: 100%;
-                      margin-top: -5.8rem;
-                      margin-bottom: 1.25rem;
-                    "
-                  >
-                    Assumption: an engineer would have taken
-                    {{ timePerLineInMinutes }} minutes to write and unit test
-                    the same line of code manually. Engineer daily rate is
-                    assumed to be AED {{ developerRatePerDay }}
-                  </div>
-                </v-expand-transition>
-              </div>
-              <div
-                class="text-caption text-grey-darken-3"
-                v-if="!isHovering"
-              >
-                {{ duration }}
-              </div>
-            </div>
-          </v-card-item>
-        </v-card>
-      </v-hover>
-
-      <div class="text-h6 my-auto">Vs</div>
-      <v-card
-        elevation="4"
-        color="brown-lighten-3"
-        variant="elevated"
-        class="mx-3 my-3"
-        style="width: 220px; height: 175px"
-      >
-        <v-card-item>
-          <div class="my-5">
-            <div class="text-h3 font-weight-bold text-brown-darken-4">
-              <small
-                class="text-button font-weight-bold text-brown-darken-2"
-                style="margin-right: -0.5rem"
-                >AED</small
-              >
-              {{
-                licenseCost.toLocaleString('en-US', {
-                  style: 'decimal',
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                })
-              }}
-            </div>
-            <div
-              class="text-normal-1 mt-1 text-brown-darken-2 font-weight-bold"
-            >
-              License Cost
-            </div>
-            <div class="text-caption text-grey-darken-3">
-              in {{ currentMonth }}
-            </div>
-          </div>
-        </v-card-item>
-      </v-card>
-
-      <div class="text-h3 my-auto font-weight-bold">=</div>
-      <v-card
-        elevation="4"
-        color="green-lighten-3"
-        variant="elevated"
-        class="mx-3 my-3"
-        style="width: 220px; height: 175px"
-      >
-        <v-card-item>
-          <div class="my-5">
-            <div class="text-h3 font-weight-bold text-green-darken-4">
-              {{
-                ~~(((costAvoidance - licenseCost) / licenseCost) * 100).toFixed(
-                  0,
-                )
-              }}%
-            </div>
-            <div
-              class="text-normal-1 mt-1 text-green-darken-2 font-weight-bold"
-            >
-              Return on Investment
-            </div>
-            <div class="text-caption text-grey-darken-3">
-              {{ duration }}
-            </div>
-          </div>
-        </v-card-item>
-      </v-card>
-      <v-card
-        elevation="4"
-        color="red-lighten-3"
-        variant="elevated"
-        class="mx-3 my-3"
-        style="width: 260px; height: 175px"
+      <StatusCard
         v-if="selectedTeam === null || selectedTeam === ''"
-      >
-        <v-card-item>
-          <div class="my-5">
-            <div class="text-h3 font-weight-bold text-red-darken-4">
-              <small
-                class="text-button font-weight-bold text-red-darken-2"
-                style="margin-right: -0.5rem"
-                >AED</small
-              >
-              {{
-                (inactiveSeats * copilotLicenseCost).toLocaleString('en-US', {
-                  style: 'decimal',
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                })
-              }}
-            </div>
-            <div class="text-normal-1 mt-1 text-red-darken-2 font-weight-bold">
-              Potential license cost reduction
-            </div>
-            <div class="text-caption text-grey-darken-3">
-              by removing inactive licenses
-            </div>
-          </div>
-        </v-card-item>
-      </v-card>
+        :value="
+          (inactiveSeats * copilotLicenseCost).toLocaleString('en-US', {
+            style: 'decimal',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+          })
+        "
+        label="Potential license cost reduction"
+        month="by removing inactive licenses"
+        currency="true"
+        width="270px"
+      />
     </div>
 
-    <v-divider class="mx-3 border-opacity-50"></v-divider>
-    <div class="text-h4 font-weight-bold mt-3 mx-3">
-      Split for {{ cumulativeNumberLOCAccepted }} generated lines of code
-    </div>
+    <div class="text-h4 mt-3 mx-3 text-gray">Code Generation Analysis</div>
 
     <div class="tiles-container my-2">
-      <v-hover v-slot="{ isHovering, props }">
-        <v-card
-          elevation="4"
-          color="red-lighten-3"
-          variant="elevated"
-          class="mx-3 my-3"
-          style="width: 220px; height: 175px"
-          v-bind="props"
-        >
-          <v-card-item>
-            <div class="my-5">
-              <div class="text-h3 font-weight-bold text-red-darken-4">
-                {{
-                  ~~(
-                    (totalGeneratedCode / cumulativeNumberLOCAccepted) *
-                    100
-                  ).toFixed(0)
-                }}%
-              </div>
-              <div
-                class="text-normal-1 font-weight-bold mt-1 text-red-darken-2"
-              >
-                development code *
-                <v-expand-transition>
-                  <div
-                    v-if="isHovering"
-                    class="d-flex transition-fast-in-fast-out bg-red-darken-3 text-caption px-1 py-1 rounded"
-                    style="
-                      height: 100%;
-                      margin-top: -6.5rem;
-                      margin-bottom: 1.25rem;
-                    "
-                  >
-                    Approximation based on
-                    {{ developmentLanguages.join(', ') }} code. Java code is
-                    considered 50% for development and 50% for unit tests.
-                  </div>
-                </v-expand-transition>
-              </div>
-              <div
-                class="text-caption text-grey-darken-3"
-                v-if="!isHovering"
-              >
-                generated {{ duration }}
-              </div>
-            </div>
-          </v-card-item>
-        </v-card>
-      </v-hover>
+      <StatusCard
+        :value="cumulativeNumberLOCAccepted"
+        label="Lines of code generated"
+        :month="duration"
+        width="220px"
+      />
 
-      <v-hover v-slot="{ isHovering, props }">
-        <v-card
-          elevation="4"
-          color="green-lighten-3"
-          variant="elevated"
-          class="mx-3 my-3"
-          style="width: 220px; height: 175px"
-          v-bind="props"
-        >
-          <v-card-item>
-            <div class="my-5">
-              <div class="text-h3 font-weight-bold text-green-darken-4">
-                {{
-                  ~~(
-                    (totalGenetedTests / cumulativeNumberLOCAccepted) *
-                    100
-                  ).toFixed(0)
-                }}%
-              </div>
-              <div
-                class="text-normal-1 font-weight-bold mt-1 text-green-darken-2"
-              >
-                unit tests *<v-expand-transition>
-                  <div
-                    v-if="isHovering"
-                    class="d-flex transition-fast-in-fast-out bg-green-darken-3 text-caption px-2 py-2 rounded"
-                    style="
-                      height: 100%;
-                      margin-top: -6rem;
-                      margin-bottom: 1.25rem;
-                    "
-                  >
-                    Approximation based on
-                    {{ unitTestLanguages.join(', ') }} code. Java code is
-                    considered 50% for development and 50% for unit tests.
-                  </div>
-                </v-expand-transition>
-              </div>
-              <div
-                class="text-caption text-grey-darken-3"
-                v-if="!isHovering"
-              >
-                generated {{ duration }}
-              </div>
-            </div>
-          </v-card-item>
-        </v-card>
-      </v-hover>
+      <div class="text-h3 my-auto text-gray">&asymp;</div>
 
-      <v-hover v-slot="{ isHovering, props }">
-        <v-card
-          elevation="4"
-          color="purple-lighten-3"
-          variant="elevated"
-          class="mx-3 my-3"
-          style="width: 220px; height: 175px"
-          v-bind="props"
-        >
-          <v-card-item>
-            <div class="my-5">
-              <div class="text-h3 font-weight-bold text-purple-darken-4">
-                {{
-                  ~~(
-                    (totalGeneratedConfigurations /
-                      cumulativeNumberLOCAccepted) *
-                    100
-                  ).toFixed(0)
-                }}%
-              </div>
-              <div
-                class="text-normal-1 font-weight-bold mt-1 text-purple-darken-2"
-              >
-                configuration files *<v-expand-transition>
-                  <div
-                    v-if="isHovering"
-                    class="d-flex transition-fast-in-fast-out bg-purple-darken-3 text-caption px-2 py-2 rounded"
-                    style="
-                      height: 100%;
-                      margin-top: -6rem;
-                      margin-bottom: 1.25rem;
-                    "
-                  >
-                    Approximation based on
-                    {{ configurationLanguages.join(', ') }} code.
-                  </div>
-                </v-expand-transition>
-              </div>
-              <div
-                class="text-caption text-grey-darken-3"
-                v-if="!isHovering"
-              >
-                generated {{ duration }}
-              </div>
-            </div>
-          </v-card-item>
-        </v-card>
-      </v-hover>
+      <HoverStatusCard
+        :value="
+          ~~((totalGeneratedCode / cumulativeNumberLOCAccepted) * 100).toFixed(
+            0,
+          ) + '%'
+        "
+        label="development code *"
+        :month="duration"
+        :hoverText="`Approximation based on ${developmentLanguages.join(
+          ', ',
+        )} code. Java code is considered 50% for development and 50% for unit tests.`"
+        width="185px"
+        height="175px"
+      />
 
-      <v-card
-        elevation="4"
-        color="purple-lighten-3"
-        variant="elevated"
-        class="mx-3 my-3"
-        style="width: 220px; height: 175px"
-      >
-        <v-card-item>
-          <div class="my-5">
-            <div class="text-h3 font-weight-bold text-purple-darken-4">
-              {{
-                ~~(
-                  (totalOtherGeneratedCode / cumulativeNumberLOCAccepted) *
-                  100
-                ).toFixed(0)
-              }}%
-            </div>
-            <div
-              class="text-normal-1 font-weight-bold mt-1 text-purple-darken-2"
-            >
-              Non-code files
-            </div>
-            <div class="text-caption text-grey-darken-3">
-              generated {{ duration }}
-            </div>
-          </div>
-        </v-card-item>
-      </v-card>
+      <HoverStatusCard
+        :value="
+          ~~((totalGenetedTests / cumulativeNumberLOCAccepted) * 100).toFixed(
+            0,
+          ) + '%'
+        "
+        label="unit tests *"
+        :month="duration"
+        :hoverText="`Approximation based on ${unitTestLanguages.join(
+          ', ',
+        )} code. Java code is considered 50% for development and 50% for unit tests.`"
+        width="185px"
+        height="175px"
+      />
+
+      <HoverStatusCard
+        :value="
+          ~~(
+            (totalGeneratedConfigurations / cumulativeNumberLOCAccepted) *
+            100
+          ).toFixed(0) + '%'
+        "
+        label="configuration files *"
+        :month="duration"
+        :hoverText="`Approximation based on ${configurationLanguages.join(
+          ', ',
+        )} code.`"
+        width="185px"
+        height="175px"
+      />
+
+      <StatusCard
+        :value="
+          ~~(
+            (totalOtherGeneratedCode / cumulativeNumberLOCAccepted) *
+            100
+          ).toFixed(0) + '%'
+        "
+        label="Non-code files"
+        :month="duration"
+        width="185px"
+        height="175px"
+      />
     </div>
   </div>
+  <!-- <v-divider class="mx-3 border-opacity-50"></v-divider> -->
+  <div class="text-h4 mt-3 mx-3 text-gray">Cost vs Benefit Analysis</div>
+  <div class="tiles-container mb-2">
+    <!-- <div class="text-h3 my-auto font-weight-bold">::</div> -->
+    <HoverStatusCard
+      :value="
+        costAvoidance.toLocaleString('en-US', {
+          style: 'decimal',
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        })
+      "
+      label="Cost Avoided *"
+      :month="duration"
+      :hoverText="`Assumption: an engineer would have taken ${timePerLineInMinutes} minutes to write and unit test the same line of code manually. Engineer daily rate is assumed to be AED ${developerRatePerDay}`"
+      width="230px"
+      height="175px"
+      currency="true"
+    />
+
+    <div class="text-h6 my-auto text-gray">Vs</div>
+    <StatusCard
+      :value="
+        licenseCost.toLocaleString('en-US', {
+          style: 'decimal',
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        })
+      "
+      label="License Cost"
+      :month="currentMonth"
+      currency="true"
+    />
+
+    <div class="text-h3 my-auto font-weight-medium text-gray">=</div>
+
+    <StatusCard
+      :value="`${~~(
+        ((costAvoidance - licenseCost) / licenseCost) *
+        100
+      ).toFixed(0)}%`"
+      label="Return on Investment"
+      :month="duration"
+    />
+  </div>
+
+  <!-- <v-divider class="mx-3 border-opacity-50"></v-divider> -->
 </template>
 
 <script lang="ts">
@@ -492,6 +173,9 @@ import {
 } from 'chart.js';
 import { Team } from '@/model/Team';
 import { format, formatDistanceStrict, addDays } from 'date-fns';
+import StatusCard from './StatusCard.vue';
+import HoverStatusCard from './HoverStatusCard.vue';
+import ProgressCard from './ProgressCard.vue';
 
 ChartJS.register(
   ArcElement,
@@ -546,8 +230,9 @@ export default defineComponent({
     },
   },
   components: {
-    // Line,
-    // Bar,
+    StatusCard,
+    HoverStatusCard,
+    ProgressCard,
   },
   data() {
     return {
@@ -941,5 +626,20 @@ export default defineComponent({
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+}
+.text-gray {
+  color: #333333 !important;
+}
+.text-dark-red {
+  color: #a8050e !important;
+}
+.text-light-red {
+  color: #e30613 !important;
+}
+.bg-gray {
+  background-color: #333333 !important;
+}
+.tiny-text {
+  font-size: 0.65rem !important;
 }
 </style>

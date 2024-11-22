@@ -63,7 +63,7 @@
         <v-progress-linear
           v-if="!metricsReady"
           indeterminate
-          color="indigo"
+          color="#a8050e"
         ></v-progress-linear>
         <v-window
           v-if="metricsReady"

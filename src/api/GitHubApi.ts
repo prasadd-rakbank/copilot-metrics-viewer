@@ -46,6 +46,16 @@ const fetchFileContent = async (filePath: string): Promise<Metrics[]> => {
       },
     },
   );
+  //clear all stale files in localstorage
+  let suffix = 'org';
+  if (!filePath.includes(suffix)) {
+    suffix = 'team';
+  }
+  Object.keys(localStorage).forEach((key) => {
+    if (key.includes('combined-' + suffix)) {
+      localStorage.removeItem(key);
+    }
+  });
   //cache the response
   localStorage.setItem(filePath, JSON.stringify(apiResponse.data));
   return apiResponse.data;
