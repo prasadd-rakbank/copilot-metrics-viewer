@@ -1,0 +1,87 @@
+[
+  {
+    "day": "2024-11-22",
+    "total_suggestions_count": 424,
+    "total_acceptances_count": 115,
+    "total_lines_suggested": 636,
+    "total_lines_accepted": 67,
+    "total_active_users": 9,
+    "total_chat_acceptances": 1,
+    "total_chat_turns": 54,
+    "total_active_chat_users": 6,
+    "breakdown": [
+      {
+        "language": "javascriptreact",
+        "editor": "vscode",
+        "suggestions_count": 25,
+        "acceptances_count": 3,
+        "lines_suggested": 28,
+        "lines_accepted": 3,
+        "active_users": 2
+      },
+      {
+        "language": "typescriptreact",
+        "editor": "vscode",
+        "suggestions_count": 79,
+        "acceptances_count": 18,
+        "lines_suggested": 184,
+        "lines_accepted": 9,
+        "active_users": 3
+      },
+      {
+        "language": "javascript",
+        "editor": "vscode",
+        "suggestions_count": 171,
+        "acceptances_count": 53,
+        "lines_suggested": 213,
+        "lines_accepted": 25,
+        "active_users": 5
+      },
+      {
+        "language": "java",
+        "editor": "vscode",
+        "suggestions_count": 113,
+        "acceptances_count": 32,
+        "lines_suggested": 142,
+        "lines_accepted": 27,
+        "active_users": 3
+      },
+      {
+        "language": "xml",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "typescript",
+        "editor": "vscode",
+        "suggestions_count": 32,
+        "acceptances_count": 9,
+        "lines_suggested": 45,
+        "lines_accepted": 3,
+        "active_users": 2
+      },
+      {
+        "language": "ini",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "c#",
+        "editor": "visual_studio",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 22,
+        "lines_accepted": 0,
+        "active_users": 1
+      }
+    ]
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "day": "2024-11-22",
+    "total_suggestions_count": 140,
+    "total_acceptances_count": 23,
+    "total_lines_suggested": 469,
+    "total_lines_accepted": 25,
+    "total_active_users": 5,
+    "total_chat_acceptances": 25,
+    "total_chat_turns": 184,
+    "total_active_chat_users": 7,
+    "breakdown": [
+      {
+        "language": "java",
+        "editor": "vscode",
+        "suggestions_count": 38,
+        "acceptances_count": 4,
+        "lines_suggested": 52,
+        "lines_accepted": 3,
+        "active_users": 2
+      },
+      {
+        "language": "c#",
+        "editor": "visual_studio",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 22,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "unknown",
+        "editor": "jetbrains",
+        "suggestions_count": 4,
+        "acceptances_count": 0,
+        "lines_suggested": 51,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 78,
+        "acceptances_count": 17,
+        "lines_suggested": 200,
+        "lines_accepted": 20,
+        "active_users": 3
+      },
+      {
+        "language": "xml",
+        "editor": "jetbrains",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 2,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "markdown",
+        "editor": "jetbrains",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "sql",
+        "editor": "jetbrains",
+        "suggestions_count": 3,
+        "acceptances_count": 0,
+        "lines_suggested": 58,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "dockerfile",
+        "editor": "jetbrains",
+        "suggestions_count": 4,
+        "acceptances_count": 0,
+        "lines_suggested": 4,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "ini",
+        "editor": "jetbrains",
+        "suggestions_count": 4,
+        "acceptances_count": 1,
+        "lines_suggested": 6,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "json",
+        "editor": "jetbrains",
+        "suggestions_count": 3,
+        "acceptances_count": 1,
+        "lines_suggested": 72,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "yaml",
+        "editor": "jetbrains",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      }
+    ]
+  }
+]
