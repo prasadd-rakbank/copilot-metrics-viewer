@@ -1,0 +1,96 @@
+[
+  {
+    "day": "2024-12-05",
+    "total_suggestions_count": 703,
+    "total_acceptances_count": 204,
+    "total_lines_suggested": 1066,
+    "total_lines_accepted": 208,
+    "total_active_users": 9,
+    "total_chat_acceptances": 29,
+    "total_chat_turns": 182,
+    "total_active_chat_users": 9,
+    "breakdown": [
+      {
+        "language": "javascriptreact",
+        "editor": "vscode",
+        "suggestions_count": 28,
+        "acceptances_count": 8,
+        "lines_suggested": 33,
+        "lines_accepted": 3,
+        "active_users": 2
+      },
+      {
+        "language": "typescriptreact",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "javascript",
+        "editor": "vscode",
+        "suggestions_count": 463,
+        "acceptances_count": 143,
+        "lines_suggested": 635,
+        "lines_accepted": 131,
+        "active_users": 4
+      },
+      {
+        "language": "java",
+        "editor": "vscode",
+        "suggestions_count": 107,
+        "acceptances_count": 38,
+        "lines_suggested": 204,
+        "lines_accepted": 61,
+        "active_users": 2
+      },
+      {
+        "language": "typescript",
+        "editor": "vscode",
+        "suggestions_count": 4,
+        "acceptances_count": 0,
+        "lines_suggested": 4,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "json",
+        "editor": "vscode",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 4,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 46,
+        "acceptances_count": 10,
+        "lines_suggested": 94,
+        "lines_accepted": 10,
+        "active_users": 4
+      },
+      {
+        "language": "sql",
+        "editor": "jetbrains",
+        "suggestions_count": 20,
+        "acceptances_count": 3,
+        "lines_suggested": 34,
+        "lines_accepted": 2,
+        "active_users": 2
+      },
+      {
+        "language": "yaml",
+        "editor": "jetbrains",
+        "suggestions_count": 32,
+        "acceptances_count": 2,
+        "lines_suggested": 57,
+        "lines_accepted": 1,
+        "active_users": 2
+      }
+    ]
+  }
+]
