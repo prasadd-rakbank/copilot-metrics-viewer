@@ -1,0 +1,51 @@
+[
+  {
+    "day": "2024-12-07",
+    "total_suggestions_count": 10,
+    "total_acceptances_count": 0,
+    "total_lines_suggested": 10,
+    "total_lines_accepted": 0,
+    "total_active_users": 1,
+    "total_chat_acceptances": 0,
+    "total_chat_turns": 4,
+    "total_active_chat_users": 1,
+    "breakdown": [
+      {
+        "language": "oraclesql",
+        "editor": "vscode",
+        "suggestions_count": 5,
+        "acceptances_count": 0,
+        "lines_suggested": 5,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "java",
+        "editor": "vscode",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 2,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "powershell",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "sql",
+        "editor": "vscode",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 2,
+        "lines_accepted": 0,
+        "active_users": 1
+      }
+    ]
+  }
+]
