@@ -1,0 +1,69 @@
+[
+  {
+    "day": "2024-12-11",
+    "total_suggestions_count": 371,
+    "total_acceptances_count": 96,
+    "total_lines_suggested": 500,
+    "total_lines_accepted": 87,
+    "total_active_users": 5,
+    "total_chat_acceptances": 3,
+    "total_chat_turns": 26,
+    "total_active_chat_users": 1,
+    "breakdown": [
+      {
+        "language": "shell",
+        "editor": "vscode",
+        "suggestions_count": 18,
+        "acceptances_count": 0,
+        "lines_suggested": 18,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "javascript",
+        "editor": "vscode",
+        "suggestions_count": 241,
+        "acceptances_count": 69,
+        "lines_suggested": 308,
+        "lines_accepted": 40,
+        "active_users": 3
+      },
+      {
+        "language": "java",
+        "editor": "vscode",
+        "suggestions_count": 87,
+        "acceptances_count": 20,
+        "lines_suggested": 117,
+        "lines_accepted": 24,
+        "active_users": 2
+      },
+      {
+        "language": "hcl",
+        "editor": "vscode",
+        "suggestions_count": 14,
+        "acceptances_count": 6,
+        "lines_suggested": 46,
+        "lines_accepted": 22,
+        "active_users": 2
+      },
+      {
+        "language": "ini",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "yaml",
+        "editor": "vscode",
+        "suggestions_count": 10,
+        "acceptances_count": 1,
+        "lines_suggested": 10,
+        "lines_accepted": 1,
+        "active_users": 2
+      }
+    ]
+  }
+]
