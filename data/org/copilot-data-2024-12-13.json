@@ -1,0 +1,159 @@
+[
+  {
+    "day": "2024-12-13",
+    "total_suggestions_count": 631,
+    "total_acceptances_count": 150,
+    "total_lines_suggested": 1055,
+    "total_lines_accepted": 112,
+    "total_active_users": 17,
+    "total_chat_acceptances": 19,
+    "total_chat_turns": 143,
+    "total_active_chat_users": 19,
+    "breakdown": [
+      {
+        "language": "javascriptreact",
+        "editor": "vscode",
+        "suggestions_count": 6,
+        "acceptances_count": 3,
+        "lines_suggested": 6,
+        "lines_accepted": 3,
+        "active_users": 2
+      },
+      {
+        "language": "typescriptreact",
+        "editor": "vscode",
+        "suggestions_count": 16,
+        "acceptances_count": 1,
+        "lines_suggested": 22,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "javascript",
+        "editor": "vscode",
+        "suggestions_count": 424,
+        "acceptances_count": 107,
+        "lines_suggested": 586,
+        "lines_accepted": 63,
+        "active_users": 10
+      },
+      {
+        "language": "java",
+        "editor": "vscode",
+        "suggestions_count": 26,
+        "acceptances_count": 4,
+        "lines_suggested": 36,
+        "lines_accepted": 6,
+        "active_users": 2
+      },
+      {
+        "language": "xml",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "typescript",
+        "editor": "vscode",
+        "suggestions_count": 3,
+        "acceptances_count": 1,
+        "lines_suggested": 3,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "sql",
+        "editor": "vscode",
+        "suggestions_count": 9,
+        "acceptances_count": 0,
+        "lines_suggested": 10,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "html",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "json",
+        "editor": "vscode",
+        "suggestions_count": 12,
+        "acceptances_count": 2,
+        "lines_suggested": 15,
+        "lines_accepted": 2,
+        "active_users": 2
+      },
+      {
+        "language": "yaml",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "dotenv",
+        "editor": "vscode",
+        "suggestions_count": 8,
+        "acceptances_count": 0,
+        "lines_suggested": 10,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "unknown",
+        "editor": "jetbrains",
+        "suggestions_count": 4,
+        "acceptances_count": 0,
+        "lines_suggested": 10,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 114,
+        "acceptances_count": 32,
+        "lines_suggested": 347,
+        "lines_accepted": 36,
+        "active_users": 5
+      },
+      {
+        "language": "markdown",
+        "editor": "jetbrains",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 2,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "sql",
+        "editor": "jetbrains",
+        "suggestions_count": 4,
+        "acceptances_count": 0,
+        "lines_suggested": 4,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "yaml",
+        "editor": "jetbrains",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      }
+    ]
+  }
+]
