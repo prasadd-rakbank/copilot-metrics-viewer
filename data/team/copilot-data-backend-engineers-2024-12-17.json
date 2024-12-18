@@ -1,0 +1,105 @@
+[
+  {
+    "day": "2024-12-17",
+    "total_suggestions_count": 206,
+    "total_acceptances_count": 56,
+    "total_lines_suggested": 509,
+    "total_lines_accepted": 110,
+    "total_active_users": 10,
+    "total_chat_acceptances": 20,
+    "total_chat_turns": 105,
+    "total_active_chat_users": 11,
+    "breakdown": [
+      {
+        "language": "shell",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "javascript",
+        "editor": "vscode",
+        "suggestions_count": 15,
+        "acceptances_count": 5,
+        "lines_suggested": 29,
+        "lines_accepted": 6,
+        "active_users": 2
+      },
+      {
+        "language": "sql",
+        "editor": "vscode",
+        "suggestions_count": 4,
+        "acceptances_count": 0,
+        "lines_suggested": 4,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "dockerfile",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "json",
+        "editor": "vscode",
+        "suggestions_count": 1,
+        "acceptances_count": 1,
+        "lines_suggested": 1,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "unknown",
+        "editor": "jetbrains",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 2,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 161,
+        "acceptances_count": 48,
+        "lines_suggested": 430,
+        "lines_accepted": 100,
+        "active_users": 8
+      },
+      {
+        "language": "xml",
+        "editor": "jetbrains",
+        "suggestions_count": 15,
+        "acceptances_count": 2,
+        "lines_suggested": 27,
+        "lines_accepted": 3,
+        "active_users": 3
+      },
+      {
+        "language": "json",
+        "editor": "jetbrains",
+        "suggestions_count": 5,
+        "acceptances_count": 0,
+        "lines_suggested": 7,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "yaml",
+        "editor": "jetbrains",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 7,
+        "lines_accepted": 0,
+        "active_users": 1
+      }
+    ]
+  }
+]
