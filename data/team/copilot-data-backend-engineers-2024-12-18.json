@@ -1,0 +1,78 @@
+[
+  {
+    "day": "2024-12-18",
+    "total_suggestions_count": 315,
+    "total_acceptances_count": 77,
+    "total_lines_suggested": 943,
+    "total_lines_accepted": 97,
+    "total_active_users": 9,
+    "total_chat_acceptances": 32,
+    "total_chat_turns": 111,
+    "total_active_chat_users": 9,
+    "breakdown": [
+      {
+        "language": "c#",
+        "editor": "visual_studio",
+        "suggestions_count": 14,
+        "acceptances_count": 6,
+        "lines_suggested": 14,
+        "lines_accepted": 6,
+        "active_users": 2
+      },
+      {
+        "language": "json",
+        "editor": "visual_studio",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 2,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "unknown",
+        "editor": "jetbrains",
+        "suggestions_count": 7,
+        "acceptances_count": 0,
+        "lines_suggested": 10,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 173,
+        "acceptances_count": 53,
+        "lines_suggested": 373,
+        "lines_accepted": 68,
+        "active_users": 7
+      },
+      {
+        "language": "xml",
+        "editor": "jetbrains",
+        "suggestions_count": 36,
+        "acceptances_count": 10,
+        "lines_suggested": 236,
+        "lines_accepted": 15,
+        "active_users": 2
+      },
+      {
+        "language": "sql",
+        "editor": "jetbrains",
+        "suggestions_count": 75,
+        "acceptances_count": 4,
+        "lines_suggested": 277,
+        "lines_accepted": 4,
+        "active_users": 2
+      },
+      {
+        "language": "ini",
+        "editor": "jetbrains",
+        "suggestions_count": 8,
+        "acceptances_count": 4,
+        "lines_suggested": 31,
+        "lines_accepted": 4,
+        "active_users": 3
+      }
+    ]
+  }
+]
