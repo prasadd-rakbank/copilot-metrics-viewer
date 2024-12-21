@@ -1,0 +1,87 @@
+[
+  {
+    "day": "2024-12-20",
+    "total_suggestions_count": 236,
+    "total_acceptances_count": 69,
+    "total_lines_suggested": 803,
+    "total_lines_accepted": 115,
+    "total_active_users": 8,
+    "total_chat_acceptances": 22,
+    "total_chat_turns": 82,
+    "total_active_chat_users": 12,
+    "breakdown": [
+      {
+        "language": "c#",
+        "editor": "visual_studio",
+        "suggestions_count": 8,
+        "acceptances_count": 0,
+        "lines_suggested": 25,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "unknown",
+        "editor": "jetbrains",
+        "suggestions_count": 8,
+        "acceptances_count": 2,
+        "lines_suggested": 37,
+        "lines_accepted": 7,
+        "active_users": 2
+      },
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 183,
+        "acceptances_count": 59,
+        "lines_suggested": 597,
+        "lines_accepted": 92,
+        "active_users": 8
+      },
+      {
+        "language": "xml",
+        "editor": "jetbrains",
+        "suggestions_count": 7,
+        "acceptances_count": 3,
+        "lines_suggested": 9,
+        "lines_accepted": 3,
+        "active_users": 2
+      },
+      {
+        "language": "sql",
+        "editor": "jetbrains",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 2,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "dockerfile",
+        "editor": "jetbrains",
+        "suggestions_count": 11,
+        "acceptances_count": 0,
+        "lines_suggested": 17,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "ini",
+        "editor": "jetbrains",
+        "suggestions_count": 2,
+        "acceptances_count": 1,
+        "lines_suggested": 3,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "yaml",
+        "editor": "jetbrains",
+        "suggestions_count": 15,
+        "acceptances_count": 4,
+        "lines_suggested": 113,
+        "lines_accepted": 12,
+        "active_users": 2
+      }
+    ]
+  }
+]
