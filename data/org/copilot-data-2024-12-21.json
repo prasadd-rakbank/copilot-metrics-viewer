@@ -1,0 +1,33 @@
+[
+  {
+    "day": "2024-12-21",
+    "total_suggestions_count": 4,
+    "total_acceptances_count": 1,
+    "total_lines_suggested": 5,
+    "total_lines_accepted": 1,
+    "total_active_users": 2,
+    "total_chat_acceptances": 0,
+    "total_chat_turns": 3,
+    "total_active_chat_users": 2,
+    "breakdown": [
+      {
+        "language": "properties",
+        "editor": "jetbrains",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 1,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 3,
+        "acceptances_count": 1,
+        "lines_suggested": 4,
+        "lines_accepted": 1,
+        "active_users": 2
+      }
+    ]
+  }
+]
