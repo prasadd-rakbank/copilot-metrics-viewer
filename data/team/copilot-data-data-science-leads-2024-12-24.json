@@ -1,0 +1,24 @@
+[
+  {
+    "day": "2024-12-24",
+    "total_suggestions_count": 19,
+    "total_acceptances_count": 4,
+    "total_lines_suggested": 25,
+    "total_lines_accepted": 4,
+    "total_active_users": 2,
+    "total_chat_acceptances": 13,
+    "total_chat_turns": 38,
+    "total_active_chat_users": 1,
+    "breakdown": [
+      {
+        "language": "python",
+        "editor": "vscode",
+        "suggestions_count": 19,
+        "acceptances_count": 4,
+        "lines_suggested": 25,
+        "lines_accepted": 4,
+        "active_users": 2
+      }
+    ]
+  }
+]
