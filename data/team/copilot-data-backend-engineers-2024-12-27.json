@@ -1,0 +1,78 @@
+[
+  {
+    "day": "2024-12-27",
+    "total_suggestions_count": 388,
+    "total_acceptances_count": 66,
+    "total_lines_suggested": 1016,
+    "total_lines_accepted": 100,
+    "total_active_users": 9,
+    "total_chat_acceptances": 17,
+    "total_chat_turns": 142,
+    "total_active_chat_users": 10,
+    "breakdown": [
+      {
+        "language": "java",
+        "editor": "vscode",
+        "suggestions_count": 38,
+        "acceptances_count": 10,
+        "lines_suggested": 77,
+        "lines_accepted": 13,
+        "active_users": 3
+      },
+      {
+        "language": "lombok.config",
+        "editor": "jetbrains",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 2,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 307,
+        "acceptances_count": 54,
+        "lines_suggested": 690,
+        "lines_accepted": 85,
+        "active_users": 7
+      },
+      {
+        "language": "xml",
+        "editor": "jetbrains",
+        "suggestions_count": 6,
+        "acceptances_count": 0,
+        "lines_suggested": 120,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "sql",
+        "editor": "jetbrains",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 4,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "ini",
+        "editor": "jetbrains",
+        "suggestions_count": 17,
+        "acceptances_count": 1,
+        "lines_suggested": 24,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "yaml",
+        "editor": "jetbrains",
+        "suggestions_count": 18,
+        "acceptances_count": 1,
+        "lines_suggested": 99,
+        "lines_accepted": 1,
+        "active_users": 2
+      }
+    ]
+  }
+]
