@@ -1,0 +1,60 @@
+[
+  {
+    "day": "2024-12-31",
+    "total_suggestions_count": 145,
+    "total_acceptances_count": 25,
+    "total_lines_suggested": 351,
+    "total_lines_accepted": 38,
+    "total_active_users": 7,
+    "total_chat_acceptances": 29,
+    "total_chat_turns": 106,
+    "total_active_chat_users": 8,
+    "breakdown": [
+      {
+        "language": "java",
+        "editor": "vscode",
+        "suggestions_count": 15,
+        "acceptances_count": 3,
+        "lines_suggested": 17,
+        "lines_accepted": 2,
+        "active_users": 2
+      },
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 118,
+        "acceptances_count": 19,
+        "lines_suggested": 320,
+        "lines_accepted": 33,
+        "active_users": 5
+      },
+      {
+        "language": "xml",
+        "editor": "jetbrains",
+        "suggestions_count": 3,
+        "acceptances_count": 0,
+        "lines_suggested": 3,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "sql",
+        "editor": "jetbrains",
+        "suggestions_count": 7,
+        "acceptances_count": 3,
+        "lines_suggested": 9,
+        "lines_accepted": 3,
+        "active_users": 2
+      },
+      {
+        "language": "ini",
+        "editor": "jetbrains",
+        "suggestions_count": 2,
+        "acceptances_count": 0,
+        "lines_suggested": 2,
+        "lines_accepted": 0,
+        "active_users": 1
+      }
+    ]
+  }
+]
