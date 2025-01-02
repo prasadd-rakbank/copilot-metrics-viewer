@@ -1,0 +1,24 @@
+[
+  {
+    "day": "2025-01-01",
+    "total_suggestions_count": 22,
+    "total_acceptances_count": 9,
+    "total_lines_suggested": 41,
+    "total_lines_accepted": 15,
+    "total_active_users": 2,
+    "total_chat_acceptances": 5,
+    "total_chat_turns": 7,
+    "total_active_chat_users": 1,
+    "breakdown": [
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 22,
+        "acceptances_count": 9,
+        "lines_suggested": 41,
+        "lines_accepted": 15,
+        "active_users": 2
+      }
+    ]
+  }
+]
