@@ -1,0 +1,159 @@
+[
+  {
+    "day": "2025-01-06",
+    "total_suggestions_count": 713,
+    "total_acceptances_count": 188,
+    "total_lines_suggested": 1069,
+    "total_lines_accepted": 189,
+    "total_active_users": 14,
+    "total_chat_acceptances": 41,
+    "total_chat_turns": 231,
+    "total_active_chat_users": 16,
+    "breakdown": [
+      {
+        "language": "typescriptreact",
+        "editor": "vscode",
+        "suggestions_count": 48,
+        "acceptances_count": 16,
+        "lines_suggested": 88,
+        "lines_accepted": 18,
+        "active_users": 2
+      },
+      {
+        "language": "javascript",
+        "editor": "vscode",
+        "suggestions_count": 501,
+        "acceptances_count": 130,
+        "lines_suggested": 577,
+        "lines_accepted": 112,
+        "active_users": 9
+      },
+      {
+        "language": "python",
+        "editor": "vscode",
+        "suggestions_count": 10,
+        "acceptances_count": 7,
+        "lines_suggested": 29,
+        "lines_accepted": 18,
+        "active_users": 2
+      },
+      {
+        "language": "java",
+        "editor": "vscode",
+        "suggestions_count": 29,
+        "acceptances_count": 10,
+        "lines_suggested": 35,
+        "lines_accepted": 10,
+        "active_users": 3
+      },
+      {
+        "language": "lua",
+        "editor": "vscode",
+        "suggestions_count": 20,
+        "acceptances_count": 0,
+        "lines_suggested": 20,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "typescript",
+        "editor": "vscode",
+        "suggestions_count": 10,
+        "acceptances_count": 5,
+        "lines_suggested": 23,
+        "lines_accepted": 5,
+        "active_users": 2
+      },
+      {
+        "language": "json",
+        "editor": "vscode",
+        "suggestions_count": 15,
+        "acceptances_count": 4,
+        "lines_suggested": 18,
+        "lines_accepted": 4,
+        "active_users": 3
+      },
+      {
+        "language": "yaml",
+        "editor": "vscode",
+        "suggestions_count": 10,
+        "acceptances_count": 0,
+        "lines_suggested": 12,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "dotenv",
+        "editor": "vscode",
+        "suggestions_count": 12,
+        "acceptances_count": 0,
+        "lines_suggested": 12,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "unknown",
+        "editor": "jetbrains",
+        "suggestions_count": 6,
+        "acceptances_count": 2,
+        "lines_suggested": 19,
+        "lines_accepted": 2,
+        "active_users": 2
+      },
+      {
+        "language": "java",
+        "editor": "jetbrains",
+        "suggestions_count": 37,
+        "acceptances_count": 13,
+        "lines_suggested": 207,
+        "lines_accepted": 19,
+        "active_users": 4
+      },
+      {
+        "language": "xml",
+        "editor": "jetbrains",
+        "suggestions_count": 3,
+        "acceptances_count": 0,
+        "lines_suggested": 8,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "sql",
+        "editor": "jetbrains",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 9,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "ini",
+        "editor": "jetbrains",
+        "suggestions_count": 1,
+        "acceptances_count": 1,
+        "lines_suggested": 1,
+        "lines_accepted": 1,
+        "active_users": 2
+      },
+      {
+        "language": "json",
+        "editor": "jetbrains",
+        "suggestions_count": 1,
+        "acceptances_count": 0,
+        "lines_suggested": 2,
+        "lines_accepted": 0,
+        "active_users": 1
+      },
+      {
+        "language": "yaml",
+        "editor": "jetbrains",
+        "suggestions_count": 9,
+        "acceptances_count": 0,
+        "lines_suggested": 9,
+        "lines_accepted": 0,
+        "active_users": 1
+      }
+    ]
+  }
+]
