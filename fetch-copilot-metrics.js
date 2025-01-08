@@ -19,6 +19,7 @@ async function fetchCopilotMetrics(daysToSubtract = 1) {
         params: {
           since: formattedDate,
           until: formattedDate,
+          per_page:1000,
         },
       },
     );
@@ -40,6 +41,9 @@ async function getTeams(token) {
           Authorization: `Bearer ${token}`,
           'X-GitHub-Api-Version': '2022-11-28',
         },
+        params: {
+          per_page:1000,
+        },
       },
     );
 
@@ -53,6 +57,9 @@ async function getTeams(token) {
               Authorization: `Bearer ${token}`,
               'X-GitHub-Api-Version': '2022-11-28',
             },
+            params: {
+              per_page:1000,
+            },            
           },
         );
 
@@ -86,6 +93,7 @@ async function fetchTeamMetrics(daysToSubtract = 1) {
           params: {
             since: formattedDate,
             until: formattedDate,
+            per_page:1000,
           },
         },
       );
